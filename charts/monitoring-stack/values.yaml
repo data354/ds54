@@ -1,0 +1,68 @@
+grafana:
+  enabled: true
+  nodeport: 30100
+  config:
+    dashboards:
+      directory: /var/lib/grafana/dashboards
+      remote_files: 
+        - https://raw.githubusercontent.com/dykoffi/monitor-api-test/main/dashboards/Test%20dashboard-1672157440167.json
+        
+    datasources:
+      - name: Prometheus
+        type: prometheus
+        url: http://prometheus:9090
+        isDefault: false
+
+      - name: Loki
+        type: loki
+        url: http://loki:3100
+        isDefault: true
+
+loki:
+  enabled: true
+  nodeport: 30101
+
+prometheus:
+  enabled: true
+  nodeport: 30102
+  config:
+    global:
+      scrape_interval: 5s
+    sources:
+      - name: grafana
+        targets:
+          - "grafana:3000"
+
+      - name: loki
+        targets:
+          - "loki:3100"
+      
+      - name: mystack-statsd
+        targets:
+          - "mystack-statsd:9102"
+
+fluentd:
+  enabled: true
+  nodeport: 30103
+  config:
+    loki_url: "http://loki:3100"
+    tags:
+      - name: "worker.**"
+        flush_interval: 5s
+        flush_at_shutdown: true
+        extra_labels: '{"job":"worker"}'
+
+      - name: "spark.**"
+        flush_interval: 5s
+        flush_at_shutdown: true
+        extra_labels: '{"job":"spark"}'
+
+      - name: "scheduler.**"
+        flush_interval: 5s
+        flush_at_shutdown: true
+        extra_labels: '{"job":"scheduler"}'
+      
+      - name: "webserver.**"
+        flush_interval: 5s
+        flush_at_shutdown: true
+        extra_labels: '{"job":"webserver"}'

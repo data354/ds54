@@ -1,0 +1,120 @@
+{{- if .Values.grafana }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-datasources-conf
+  labels:
+    chart: "{{ $.Chart.Name }}-{{ $.Chart.Version | replace "+" "_" }}"
+data:
+  datasources.yaml: |-
+    datasources:
+      {{ range .Values.grafana.config.datasources -}}
+      - name: {{ .name }}
+        type: {{ .type }}
+        url: {{ .url }}
+        isDefault: {{ .isDefault }}
+      {{ end }}
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboards-conf
+  labels:
+    chart: "{{ $.Chart.Name }}-{{ $.Chart.Version | replace "+" "_" }}"
+data:
+  dashboards.yaml: |-
+    apiVersion: 1
+    providers:
+      - name: 'My own'
+        orgId: 1
+        folder: ''
+        folderUid: ''
+        type: file
+        disableDeletion: false
+        updateIntervalSeconds: 10
+        allowUiUpdates: true
+        options:
+          path: {{ .Values.grafana.config.dashboards.directory }}
+          foldersFromFilesStructure: true
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana
+spec:
+  {{ if .Values.grafana.nodeport -}}
+  type: NodePort
+  {{ end -}}
+  ports:
+    - port: 3000
+      targetPort: 3000
+      {{ if .Values.grafana.nodeport -}}
+      nodePort: {{ .Values.grafana.nodeport }}
+      {{ end -}}
+      protocol: TCP
+      name: http
+  selector:
+    app: grafana
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana
+  labels:
+    app: grafana
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+spec:
+  selector:
+    matchLabels:
+      app: grafana
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: grafana
+    spec:
+      securityContext:
+        runAsUser: 472
+        runAsGroup: 472
+        fsGroup: 472
+      containers:
+      - name: {{ .Chart.Name }}-grafana
+        image: grafana/grafana
+        lifecycle:
+          postStart:
+            exec:
+              command: ["bash", "-c", "mkdir {{ .Values.grafana.config.dashboards.directory }} && wget -P {{ .Values.grafana.config.dashboards.directory }} {{ join " " .Values.grafana.config.dashboards.remote_files }}"]
+        volumeMounts:
+            - mountPath: /var/lib/grafana
+              name: grafana-data
+            - mountPath: /etc/grafana/provisioning/dashboards
+              name: grafana-dashboards-conf
+            - mountPath: /etc/grafana/provisioning/datasources
+              name: grafana-datasources-conf
+            
+      volumes:
+        - name: grafana-datasources-conf
+          configMap:
+            name: grafana-datasources-conf
+        - name: grafana-dashboards-conf
+          configMap:
+            name: grafana-dashboards-conf
+        - name: grafana-data
+          persistentVolumeClaim:
+            claimName: grafana-data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: grafana-data
+  labels:
+    chart: "{{ $.Chart.Name }}-{{ $.Chart.Version | replace "+" "_" }}"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+{{- end -}}

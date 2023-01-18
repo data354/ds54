@@ -1,0 +1,17 @@
+apiVersion: v2
+name: monitoring-stack
+description: A Stack for managing logging and monitoring
+version: 1.4.2
+appVersion: "1.17.0"
+maintainers:
+  - name: Edy Koffi
+    email: edy.koffi@gmail.com
+    url: https://www.linkedin.com/in/edy-koffi-948494192/
+keywords:
+  - monitoring
+  - logging
+  - data354
+  - kubernetes
+  - helm
+sources:
+  - https://github.com/data354/monitoring-stack

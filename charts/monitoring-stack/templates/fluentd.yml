@@ -1,0 +1,92 @@
+{{- if .Values.fluentd }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fluentd-conf
+  labels:
+    chart: "{{ $.Chart.Name }}-{{ $.Chart.Version | replace "+" "_" }}"
+data:
+  fluent.conf: |-
+    # Configuration de base de Fluentd
+    <system>
+      # Nombre de threads utilisés pour traiter les données de journalisation
+      workers 4
+    </system>
+
+    <source>
+      @type forward
+      port 24224
+    </source>
+
+    # Configuration du buffer de Fluentd
+    <buffer>
+      # Taille maximale du buffer en mémoire
+      memory_limit_mb  4096
+      
+      # Taille maximale des données stockées dans le buffer en mémoire avant qu'elles ne soient écrites sur disque
+      chunk_limit_size 104857600
+      
+      # Durée de rétention des données dans le buffer avant qu'elles ne soient écrites sur disque
+      retention_time 3600
+    </buffer>
+
+    {{ range .Values.fluentd.config.tags }}
+    <match {{ .name }}>
+      @type loki
+      url "#{ENV['LOKI_URL']}"
+      extra_labels {{ .extra_labels }}
+    </match>
+    {{ end }}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fluentd
+spec:
+  {{ if .Values.fluentd.nodeport -}}
+  type: NodePort
+  {{ end -}}
+  ports:
+    - port: 24224
+      targetPort: 24224
+      protocol: TCP
+      {{ if .Values.fluentd.nodeport -}}
+      nodePort: {{ .Values.fluentd.nodeport }}
+      {{ end -}}
+      name: http
+  selector:
+    app: fluentd
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fluentd
+  labels:
+    app: fluentd
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+spec:
+  selector:
+    matchLabels:
+      app: fluentd
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: fluentd
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}-fluentd
+        image: grafana/fluent-plugin-loki
+        env:
+          - name: LOKI_URL
+            value: "{{ .Values.fluentd.config.loki_url }}"
+        volumeMounts:
+          - name: fluentd-conf
+            mountPath: /fluentd/etc
+            readOnly: true
+      volumes:
+        - name: fluentd-conf
+          configMap:
+            name: fluentd-conf
+{{- end -}}

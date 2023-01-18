@@ -1,0 +1,67 @@
+{{- if .Values.prometheus }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-conf
+  labels:
+    chart: "{{ $.Chart.Name }}-{{ $.Chart.Version | replace "+" "_" }}"
+data:
+  prometheus.yml: |-
+    global:
+      scrape_interval: {{ .Values.prometheus.config.global.scrape_interval}}
+
+    scrape_configs:
+    {{- range .Values.prometheus.config.sources }}
+      - job_name: {{ .name }}
+        static_configs:
+          - targets: [{{ join "," .targets }}]
+    {{- end }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus
+spec:
+  {{ if .Values.prometheus.nodeport -}}
+  type: NodePort
+  {{ end -}}
+  ports:
+    - port: 9090
+      targetPort: 9090
+      {{ if .Values.prometheus.nodeport -}}
+      nodePort: {{ .Values.prometheus.nodeport }}
+      {{ end -}}
+      protocol: TCP
+      name: http
+  selector:
+    app: prometheus
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus
+  labels:
+    app: prometheus
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+spec:
+  selector:
+    matchLabels:
+      app: prometheus
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: prometheus
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}-prometheus
+        image: prom/prometheus
+        volumeMounts:
+            - name: prometheus-conf
+              mountPath: /etc/prometheus
+              readOnly: true
+      volumes:
+        - name: prometheus-conf
+          configMap:
+            name: prometheus-conf
+{{- end -}}
