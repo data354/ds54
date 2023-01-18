@@ -1,0 +1,7 @@
+---
+- name: Enable Haproxy Service
+  become: true
+  ansible.builtin.service:
+    name: haproxy
+    state: restarted
+    enabled: true

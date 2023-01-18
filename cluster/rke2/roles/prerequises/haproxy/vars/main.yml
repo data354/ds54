@@ -1,0 +1,6 @@
+---
+haproxy_admin_user: xkdy
+haproxy_admin_password: dimanche54
+haproxy_stats_port: 9000
+haproxy_bin_path: /usr/sbin
+haproxy_config_dir: /etc/haproxy

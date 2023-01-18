@@ -1,0 +1,8 @@
+---
+release_name: "rancher-monitoring"
+release_namespace: "cattle-monitoring-system"
+chart_ref: https://github.com/rancher/charts/raw/dev-v2.7/assets/rancher-monitoring/rancher-monitoring-101.0.0%2Bup19.0.3.tgz
+
+crds_release_name: "rancher-monitoring-crd"
+crds_release_namespace: "cattle-monitoring-system"
+crds_chart_ref: https://github.com/rancher/charts/raw/dev-v2.7/assets/rancher-monitoring-crd/rancher-monitoring-crd-101.0.0%2Bup19.0.3.tgz

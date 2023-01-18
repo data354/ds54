@@ -1,0 +1,27 @@
+---
+- name: Deploy Kube-prometheus-stack
+  when: install_monitoring_cluster
+  block:
+    - name: Install the rancher-monitoring-crd Helm chart
+      kubernetes.core.helm:
+        name: "{{ crds_release_name }}"
+        chart_ref: "{{ crds_chart_ref }}"
+        release_namespace: "{{ crds_release_namespace }}"
+        create_namespace: true
+
+    - name: Install the rancher-monitoring Helm chart
+      kubernetes.core.helm:
+        name: "{{ release_name }}"
+        chart_ref: "{{ chart_ref }}"
+        release_namespace: "{{ release_namespace }}"
+        create_namespace: true
+        update_repo_cache: true
+        values:
+          prometheus.prometheusSpec.evaluationInterval=1m
+          prometheus.prometheusSpec.retentionSize=50GiB
+          prometheus.prometheusSpec.scrapeInterval=1m
+          rke2ControllerManager.enabled=true
+          rke2Scheduler.enabled=true
+          rke2Proxy.enabled=true
+          rke2IngressNginx.enabled=true
+          rke2Etcd.enabled=true

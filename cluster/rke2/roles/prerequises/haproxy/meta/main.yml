@@ -1,0 +1,12 @@
+galaxy_info:
+  role_name: haproxy
+  author: data354
+  description: A set of settings and variables for haproxy deployment
+  license: MIT
+  min_ansible_version: "2.10"
+  platforms:
+    - name: Debian
+      versions:
+        - "all"
+dependencies:
+  - role: common

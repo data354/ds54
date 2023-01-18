@@ -1,0 +1,75 @@
+global
+    log         127.0.0.1 local2
+    chroot      /var/lib/haproxy
+    pidfile     /var/run/haproxy.pid
+    maxconn     4000
+    user        haproxy
+    group       haproxy
+    daemon
+    stats socket /var/lib/haproxy/stats
+
+defaults
+    mode                    http
+    log                     global
+    option                  httplog
+    option                  dontlognull
+    option                  http-server-close
+    option forwardfor       except 127.0.0.0/8
+    option                  redispatch
+    retries                 3
+    timeout http-request    10s
+    timeout queue           5m
+    timeout connect         5m
+    timeout client          5m
+    timeout server          5m
+    timeout http-keep-alive 10s
+    timeout check           10s
+    maxconn                 3000
+
+listen stats
+    bind *:{{ haproxy_stats_port }}
+    stats enable
+    stats uri /stats
+    stats refresh 5s
+    stats auth {{ haproxy_admin_user }}:{{ haproxy_admin_password }}
+
+listen kubernetes-connect-cluster
+    bind *:{{ join_cluster_port }}
+    mode tcp
+    option log-health-checks
+    balance first
+    {% for item in groups['control_plane'] -%}
+    server {{ item }} {{ item }}:{{ join_cluster_port }} maxconn 5 check check-ssl verify none inter 10000
+    {% endfor %}
+
+listen kubernetes-apiserver-https
+    bind *:{{ apiserver_port }}
+    mode tcp
+    option log-health-checks
+    timeout client 10m
+    timeout server 10m
+    {% for item in groups['control_plane'] -%}
+    server {{ item }} {{ item }}:{{ apiserver_port }} check check-ssl verify none inter 10000
+    {% endfor %}
+
+listen kubernetes-ingress-http-services
+    bind *:80
+    {% for item in groups['k8s'] -%}
+    server {{ item }} {{ item }}:80 check
+    {% endfor %}
+
+listen kubernetes-ingress-https-services
+    bind *:443
+    mode tcp
+    option tcplog
+    {% for item in groups['k8s'] -%}
+    server {{ item }} {{ item }}:443 check check-ssl verify none inter 10000
+    {% endfor %}
+
+{% for item in k8s_services_nodeport -%}
+listen {{ item.name }}-nodeport
+    bind *:{{ item.port }}
+    mode tcp
+    option tcplog
+    server {{ groups['k8s'][0] }} {{ groups['k8s'][0] }}:{{ item.port }} check
+{% endfor %}

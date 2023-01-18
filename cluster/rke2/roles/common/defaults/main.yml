@@ -1,0 +1,35 @@
+---
+loadbalancer_addresses: ["10.240.0.2", "master-ansible"]
+loadbalancer_public_address: "34.27.128.193"
+public_domain_name: "{{ loadbalancer_public_address }}.sslip.io"
+join_cluster_port: 9345
+apiserver_port: 6443
+cluster_token: fbf77b7e4e40d763ad4df32ec9e02d877b112eab
+user: k8s
+kube_config_directory: /home/{{ user }}/.kube
+install_rancher: true
+install_longhorn: true
+install_airflow: false
+install_monitoring_cluster: true
+install_monitoring_stack: false
+k8s_services_nodeport:
+  - name: airflow-ui
+    port: 30000
+  - name: minio-ui
+    port: 30001
+  - name: postgres
+    port: 30002
+  - name: trino-ui
+    port: 30003
+  - name: grafana-ui
+    port: 30100
+  - name: loki
+    port: 30101
+  - name: prometheus-ui
+    port: 30102
+  - name: fuentd
+    port: 30103
+
+authorized_keys:
+  - requester: Yasmine Kouadio
+    key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCwcnFZur1ZIGbGHpT8QUL6udzNQk191MDwXu80WeQHuRr94g7iQq9WJm/9vzLmDUS8f6pVcOre7/9a8zkhtADfkigkGU1/ksqH+9dfGV0GbuuErsfU6hLK4woDg0bf2ymJbK4Fv/XB3zq13gkCwiR7xANrLUoY3aR6kM+WjkcAS33YXY2sGoQxrCkFjNRkPMOW98Gx3qLhuVUgfVGjZkPqE5zIBbkOT4SDs+sv9cET44LxFuvW86Kw8QSh3K/GqcLWnFCbYHufncMwNN/YwvgIi5cNdhT2QC0rV3isriepfgKIYJPexfNfwGWlgE5r4GcoY6zCcMLKkE2YDoutcUKgULax+0YgOAkLdLFJIOd0DUA5fUkpXU6WUderRA5enjqlnQYfkWQK5yCOcSkjapzUyURUxLlmoQ9qCvRh3LGxX7xh5F1+iSnyeF4PcUPNKeXBPJCchueVPfeDMKf/hFbgPYGH3rjMlVJCwF3cqjgb5VsAm/V35wioyRAr//HVkSIHswd5lnOz1WeLmAXG9ZP6ZQlcA77xTF6FvkUPVxi+6TxtvonecGSzsgsjmUm9tlaIbqmEiF0VAuhQEgCGu6Kn2XmDQn7aqOXSp4+Hh9vTqchmY28w1lJ7t9OThLC6ZNkk83vdX9pnwPJJLLS/vzFyy70b2DgmGk7FFkteZuRGSw== yasminekouadio@hotmail.fr

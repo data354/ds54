@@ -1,0 +1,10 @@
+---
+pr_key_file: "/home/{{ user }}/.ssh/id_rsa"
+release_name: "stack"
+release_namespace: "default"
+dags_repo: "ssh://git@github.com/data354/Data-stack.git"
+subpath: "airflow/dags"
+tag: "v5"
+img_registry: "yasminekd/airflow-sim"
+stack_repo: "https://data354.github.io/Helmschart354/Stack/"
+sshKeySecret: "airflow-git-secret"

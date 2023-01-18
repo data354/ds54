@@ -1,0 +1,25 @@
+---
+- name: Deploy Data monitoring stack
+  when: install_monitoring_stack
+  block:
+    - name: Create monitoring-stack namespace
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: v1
+          kind: Namespace
+          metadata:
+            name: "{{ release_namespace }}"
+
+    - name: Add the data354 Helm repository
+      kubernetes.core.helm_repository:
+        name: data354helm
+        repo_url: "https://data354.github.io/helm"
+
+    - name: Install the monitoring-stack Helm chart
+      kubernetes.core.helm:
+        name: "{{ release_name }}"
+        chart_ref: data354helm/monitoring-stack
+        release_namespace: "{{ release_namespace }}"
+        create_namespace: true
+        update_repo_cache: true

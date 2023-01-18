@@ -1,0 +1,74 @@
+---
+- name: Create Airflow namespace
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: "{{ release_namespace }}"
+
+- name: Create Secret with machine private key
+  failed_when: false
+  ansible.builtin.command:
+    cmd: kubectl create secret generic airflow-git-secret --from-file=gitSshKey={{ pr_key_file }} -n {{ release_namespace }}
+  register: output2
+  changed_when: output2.rc != 0
+
+- name: Get host public key
+  ansible.builtin.command:
+    cmd: cat {{ pr_key_file }}.pub
+  register: output3
+  changed_when: output3.rc != 0
+
+- name: Confirmation de la copie de la clé ssh sur le compte github
+  ansible.builtin.pause:
+    prompt: |
+
+      {{ output3.stdout }}
+
+      Assurer-vous d'ajouter la clé ci-dessus sur votre compte github pour créer la connection avec Airflow.
+      Une fois ceci fait, appuyer entrer pour continuer l'installation.
+
+- name: Create Secret with machine private key
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: rbac.authorization.k8s.io/v1
+      kind: ClusterRoleBinding
+      metadata:
+        name: service-all-pod
+      roleRef:
+        apiGroup: rbac.authorization.k8s.io
+        kind: ClusterRole
+        name: service-all
+      subjects:
+      - kind: ServiceAccount
+        name: stack-aiflow-worker
+        namespace: "{{ release_namespace }}"
+
+- name: Install Airflow
+  when: install_airflow
+  block:
+    - name: Add the Airflow Helm repository
+      kubernetes.core.helm_repository:
+        name: stack
+        repo_url: "{{ stack_repo }}"
+
+    - name: Install the airflow Helm chart
+      kubernetes.core.helm:
+        name: "{{ release_name }}"
+        chart_ref: stack/modernstack
+        release_namespace: "{{ release_namespace }}"
+        create_namespace: true
+        update_repo_cache: true
+        values:
+          postgres.enabled=true
+          airflow.enabled=true
+          airflow.dags.gitSync.branch=master
+          airflow.dags.gitSync.enabled=true
+          airflow.dags.gitSync.repo={{ dags_repo }}
+          airflow.dags.gitSync.sshKeySecret={{ sshKeySecret }}
+          airflow.dags.gitSync.subPath={{ subpath }}
+          airflow.images.airflow.repository={{ img_registry }}
+          airflow.images.airflow.tag={{ tag }}
