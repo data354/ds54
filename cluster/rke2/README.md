@@ -26,7 +26,7 @@ It takes into account the following features:
 * Backup
 * Ram: 16+ Gi
 * CPU: 8+
-* Disk: 100+ SSD
+* Disk: 100Gi+ SSD
 * OS: RHEL 8.5
 
 **Software**
