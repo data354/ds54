@@ -1,6 +1,6 @@
 # RKE2 SETUP CONFIG
 
-1. Update config in `Pulumi.dev.yaml` following your
+1. Update config in `Pulumi.dev.yaml` following your 
 2. Run the pulumi script `pulumi up -y `for compute provisionning
 3. Get compute public address with `gcloud compute instances list --format="value(NAME, EXTERNAL_IP)" | sed 's/-/_/g' | sed -r 's/\s/_public_ip=/'` . Copy and paste the result in `initialize-ansible-cluester.sh` in the section `PUBLIC_IP`
 4. Run script `sh initialize-ansible-cluester.sh `to initialize ansible cluster

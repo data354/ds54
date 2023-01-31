@@ -132,40 +132,34 @@ const master_ansible = createGCEInstance(
 	sudo apt install -y ansible
 	sudo apt install -y ansible-lint
 	sudo apt install -y git
-  `
+  `,
+  60
 );
 
-const control_plane_1 = createGCEInstance(
-	"control-plane-1",
+const server_1 = createGCEInstance(
+	"server-1",
 	"10.240.0.4",
 	`k8s:${config.require("myPublicKey")}`,
-	["control-plane-1", "k8s"],
+	["server-1", "k8s"],
 );
 
-const control_plane_2 = createGCEInstance(
-	"control-plane-2",
+const server_2 = createGCEInstance(
+	"server-2",
 	"10.240.0.5",
 	`k8s:${config.require("myPublicKey")}`,
 	["control-plane", "k8s"],
 );
 
-const control_plane_3 = createGCEInstance(
-	"control-plane-3",
+const server_3 = createGCEInstance(
+	"server-3",
 	"10.240.0.6",
 	`k8s:${config.require("myPublicKey")}`,
 	["control-plane", "k8s"],
 );
 
-const data_plane_1 = createGCEInstance(
-	"data-plane-1",
+const server_4 = createGCEInstance(
+	"server-4",
 	"10.240.0.7",
-	`k8s:${config.require("myPublicKey")}`,
-	["data-plane", "k8s"],
-);
-
-const data_plane_2 = createGCEInstance(
-	"data-plane-2",
-	"10.240.0.8",
 	`k8s:${config.require("myPublicKey")}`,
 	["data-plane", "k8s"],
 );

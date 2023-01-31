@@ -9,6 +9,7 @@ user: k8s
 kube_config_directory: /home/{{ user }}/.kube
 install_rancher: true
 install_longhorn: true
+install_airflow_requirements: false
 install_airflow: false
 install_monitoring_cluster: true
 install_monitoring_stack: false
