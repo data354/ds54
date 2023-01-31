@@ -71,5 +71,7 @@ listen {{ item.name }}-nodeport
     bind *:{{ item.port }}
     mode tcp
     option tcplog
-    server {{ groups['k8s'][0] }} {{ groups['k8s'][0] }}:{{ item.port }} check
+    {% for item in groups['k8s'] -%}
+    server {{ item }} {{ item }}:{{ item.port }} check
+    {% endfor %}
 {% endfor %}
