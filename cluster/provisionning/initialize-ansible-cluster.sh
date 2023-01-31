@@ -1,14 +1,14 @@
 # VARIABLES
-# git_username="dykoffi"
-# git_usermail="dykoffi2000@gmail.com"
+git_username=""
+git_usermail=""
 
 # PUBLIC IP
-master_ansible_public_ip="35.232.1.133"
-server_1_public_ip="34.70.59.170"
-server_2_public_ip="35.238.82.216"
-server_3_public_ip="34.27.218.213"
-server_4_public_ip="104.154.175.47"
-server_5_public_ip="34.121.200.85"
+master_ansible_public_ip="34.27.218.213"
+server_1_public_ip="104.154.175.47"
+server_2_public_ip="35.232.1.133"
+server_3_public_ip="34.121.200.85"
+server_4_public_ip="35.222.57.72"
+server_5_public_ip="34.70.59.170"
 
 # 
 
@@ -58,8 +58,6 @@ ssh-keyscan -H server-5 >> ~/.ssh/known_hosts
 "
 
 # # Cloner le depot rke2-setup-ansible
-# ssh k8s@$master_ansible_public_ip "
-# git config --global user.name '$git_username' \
-# git config --global user.email '$git_usermail' \
-# git clone https://github.com/data354/ds54.git
-# "
+ssh k8s@$master_ansible_public_ip "
+git config --global user.name '$git_username' \
+git config --global user.email '$git_usermail'"

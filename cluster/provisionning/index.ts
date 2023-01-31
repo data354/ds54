@@ -50,7 +50,7 @@ const cfAllowAllInSubnet = new gcp.compute.Firewall("allow-all-in-subnet", {
 const cfAllowSSHToK8sCluster = new gcp.compute.Firewall("allow-ssh-to-k8s-cluster", {
 	network: network.id,
 	sourceRanges: ["0.0.0.0/0"],
-	targetTags: ["k8s"],
+	targetTags: ["k8s", "backup"],
 	allows: [{ protocol: "tcp", ports: ["22"] }],
 	project
 });
@@ -69,7 +69,8 @@ function createGCEInstance(
 	sshKeys: string,
 	tags?: string[],
 	startupScript?: string,
-	diskSize: number = 100
+	diskSize: number = 100,
+	machineType: string = "e2-standard-8",
 ) {
 	return new gcp.compute.Instance(name, {
 		name,
@@ -95,7 +96,7 @@ function createGCEInstance(
 		},
 		metadataStartupScript: startupScript,
 
-		machineType: "e2-standard-2",
+		machineType: machineType,
 		project: project,
 		tags: tags,
 		zone: "us-central1-a",
@@ -133,7 +134,8 @@ const master_ansible = createGCEInstance(
 	sudo apt install -y ansible-lint
 	sudo apt install -y git
   `,
-  60
+  60,
+  "e2-standard-2"
 );
 
 const server_1 = createGCEInstance(
@@ -141,6 +143,9 @@ const server_1 = createGCEInstance(
 	"10.240.0.4",
 	`k8s:${config.require("myPublicKey")}`,
 	["k8s"],
+	undefined,
+	undefined,
+	"e2-standard-4"
 );
 
 const server_2 = createGCEInstance(
@@ -168,7 +173,10 @@ const server_5 = createGCEInstance(
 	"server-5",
 	"10.240.0.8",
 	`k8s:${config.require("myPublicKey")}`,
-	["k8s"],
+	["backup"],
+	undefined,
+	80,
+	"e2-standard-2"
 );
 
 export const master_ansible_ip = master_ansible.networkInterfaces;
