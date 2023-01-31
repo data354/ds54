@@ -3,7 +3,7 @@
   become: true
   block:
     - name: Download kubeconfig file
-      delegate_to: control-plane-1
+      delegate_to: "{{groups['control_plane'][0]}}"
       ansible.builtin.slurp:
         src: /etc/rancher/rke2/rke2.yaml
       register: kubeconfig
@@ -31,7 +31,7 @@
   become: true
   block:
     - name: Download kubectl bin file
-      delegate_to: control-plane-1
+      delegate_to: "{{groups['control_plane'][0]}}"
       ansible.builtin.slurp:
         src: /var/lib/rancher/rke2/bin/kubectl
       register: kubectl

@@ -47,7 +47,7 @@
 
     - name: Wait for port 9345 to become open on the host
       ansible.builtin.wait_for:
-        host: control-plane-1
+        host: "{{groups['control_plane'][0]}}"
         port: 9345
 
 - name: Run secondary server service
