@@ -140,28 +140,35 @@ const server_1 = createGCEInstance(
 	"server-1",
 	"10.240.0.4",
 	`k8s:${config.require("myPublicKey")}`,
-	["server-1", "k8s"],
+	["k8s"],
 );
 
 const server_2 = createGCEInstance(
 	"server-2",
 	"10.240.0.5",
 	`k8s:${config.require("myPublicKey")}`,
-	["control-plane", "k8s"],
+	["k8s"],
 );
 
 const server_3 = createGCEInstance(
 	"server-3",
 	"10.240.0.6",
 	`k8s:${config.require("myPublicKey")}`,
-	["control-plane", "k8s"],
+	["k8s"],
 );
 
 const server_4 = createGCEInstance(
 	"server-4",
 	"10.240.0.7",
 	`k8s:${config.require("myPublicKey")}`,
-	["data-plane", "k8s"],
+	["k8s"],
+);
+
+const server_5 = createGCEInstance(
+	"server-5",
+	"10.240.0.8",
+	`k8s:${config.require("myPublicKey")}`,
+	["k8s"],
 );
 
 export const master_ansible_ip = master_ansible.networkInterfaces;
