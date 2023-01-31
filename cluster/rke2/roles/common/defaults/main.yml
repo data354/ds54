@@ -1,7 +1,7 @@
 ---
 loadbalancer_addresses: ["10.240.0.2", "master-ansible"]
-loadbalancer_public_address: "34.27.128.193"
-public_domain_name: "{{ loadbalancer_public_address }}.sslip.io"
+loadbalancer_public_address: "34.70.59.170"
+public_domain_name: "34.70.59.170.sslip.io"
 join_cluster_port: 9345
 apiserver_port: 6443
 cluster_token: fbf77b7e4e40d763ad4df32ec9e02d877b112eab
