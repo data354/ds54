@@ -24,6 +24,7 @@
 
 - name: Install storage proviser (longhorn)
   hosts: localhost
+  tags: storage
   gather_facts: false
   roles:
     - apps/storage
@@ -42,6 +43,6 @@
 
 - name: Deploy Airflow stack
   hosts: localhost
-  tags: airflow
+  tags: apps
   roles:
     - apps/airflow
