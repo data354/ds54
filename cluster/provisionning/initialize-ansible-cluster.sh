@@ -1,14 +1,10 @@
-# VARIABLES
-git_username=""
-git_usermail=""
-
 # PUBLIC IP
-master_ansible_public_ip="34.27.218.213"
-server_1_public_ip="104.154.175.47"
-server_2_public_ip="35.232.1.133"
-server_3_public_ip="34.121.200.85"
-server_4_public_ip="35.222.57.72"
-server_5_public_ip="34.70.59.170"
+master_ansible_public_ip="35.188.159.220"
+server_1_public_ip="34.67.232.22"
+server_2_public_ip="35.222.189.127"
+server_3_public_ip="34.132.0.86"
+server_4_public_ip="34.72.60.186"
+server_5_public_ip="35.223.13.195"
 
 # 
 
@@ -57,7 +53,3 @@ ssh-keyscan -H server-4 >> ~/.ssh/known_hosts && \
 ssh-keyscan -H server-5 >> ~/.ssh/known_hosts
 "
 
-# # Cloner le depot rke2-setup-ansible
-ssh k8s@$master_ansible_public_ip "
-git config --global user.name '$git_username' \
-git config --global user.email '$git_usermail'"

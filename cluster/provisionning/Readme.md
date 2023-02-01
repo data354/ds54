@@ -16,4 +16,4 @@ This folder contains the elements required to provision machines in order to cre
 4. Get compute public address with `gcloud compute instances list --format="value(NAME, EXTERNAL_IP)" | sed 's/-/_/g' | sed -r 's/\s/_public_ip=/'` . Copy and paste the result in `initialize-ansible-cluester.sh` in the section `PUBLIC_IP`
 5. Run script `sh initialize-ansible-cluester.sh `to initialize ansible cluster
 6. Connect to the ansible master machine `ssh k8s@master_ansible_ip`
-7. Once connected, do a `git pull`  to get the ansible project
+7. Once connected, use  `git clone https://github.com/data354/ds54.git`  to get the ansible project
