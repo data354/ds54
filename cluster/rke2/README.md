@@ -27,7 +27,7 @@ It takes into account the following features:
 * Ram: 16+ Gi
 * CPU: 8+
 * Disk: 100Gi+ SSD
-* OS: RHEL 8.5
+* OS: Ubuntu 20.04
 
 **Software**
 
@@ -50,6 +50,10 @@ It takes into account the following features:
 * Master ansible public key must be copied on each machine of the k8s cluster to avoid typing password during playbooks execution
 
 ### Process
+
+**First step**
+
+Copy the master ansible ip address in the common variable `loadbalancer_public_address`
 
 **Test node connection**
 
