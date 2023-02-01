@@ -1,3 +1,3 @@
-name: rke2-setup
-description: A minimal Google Cloud TypeScript Pulumi program
+name: ansible-setup
+description: A pulumi project to set up an ansible cluster
 runtime: nodejs
