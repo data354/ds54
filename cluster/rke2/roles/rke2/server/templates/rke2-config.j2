@@ -2,6 +2,8 @@
 server: https://{{ loadbalancer_addresses[0] }}:{{ join_cluster_port }}
 {% endif %}
 token: {{ cluster_token }}
+node-taint:
+    - "CriticalAddonsOnly=true:NoExecute"
 tls-san:
 {% for item in loadbalancer_addresses -%}
     - {{ item }}
