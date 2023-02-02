@@ -47,8 +47,6 @@ It takes into account the following features:
 
 ## **Playbooks**
 
-There are four playbooks:
-
 `prerequises.playbook.yml`  : All apps, modules required for the stack deployment
 
 `cluster.playbook.yml` : Contains the roles for the creatin of the cluster (Server and agent)
@@ -58,7 +56,6 @@ There are four playbooks:
 `apps.playbook.yml` : Contains the differents applications of the stack to install
 
 `main.playbook.yml` : Contains all previous playbooks and runs them in order.
-
 
 ## **Configuration**
 

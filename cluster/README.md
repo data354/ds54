@@ -1,4 +1,4 @@
-Ce repertoire contient deux dossiers
+This directory contains two folders
 
-* provisionning: Provisionner des machines (compute engine) de GCP
-* rke2: Mettre en place le cluster kubernetes avec ansible
+* provisioning: Provisioning of GCP compute engines
+* rke2: Setting up the kubernetes cluster with ansible
