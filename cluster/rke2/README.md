@@ -1,6 +1,6 @@
-# rke2-setup-ansible
+# **rke2-setup-ansible**
 
-### Description
+## **Description**
 
 This project is the setup of a production environment based on a kubernetes cluster for the deployment of a Big Data stack. It automates the setup of a highly available k8s cluster on the RKE2 distribution and the installation of all software stacks.
 
@@ -13,11 +13,7 @@ It takes into account the following features:
 * Multiple OS family (Debian and Redhat)
 * Idempotence
 
-### Architecture
-
-![Architecture img](https://raw.githubusercontent.com/data354/rke2-setup-ansible/main/archtitecture_setup_rke2.png)
-
-### Prerequises
+## **Prerequises**
 
 **Nodes**
 
@@ -49,17 +45,7 @@ It takes into account the following features:
 * All machine must have a same user with root privileges (proxy and backup machine include)
 * Master ansible public key must be copied on each machine of the k8s cluster to avoid typing password during playbooks execution
 
-### Process
-
-**First step**
-
-Copy the master ansible ip address in the common variable `loadbalancer_public_address`
-
-**Test node connection**
-
-`ansible -i inventory.ini -m ping all`
-
-**Informations about playbooks**
+## **Playbooks**
 
 There are four playbooks:
 
@@ -71,17 +57,42 @@ There are four playbooks:
 
 `apps.playbook.yml` : Contains the differents applications of the stack to install
 
-All these playbooks are executed in the previous order thanks to the playbook `main.playbook.yml` which integrates them all.
+`main.playbook.yml` : Contains all previous playbooks and runs them in order.
 
-**Setup the cluster**
 
-To display time taken for tasks when running ansible-playbook
+## **Configuration**
 
-`sudo nano -m /etc/ansible/ansible.cfg`
+To display time taken for tasks when running ansible-playbook, copy and paste the following content in the file `/etc/ansible/ansible.cfg`
 
-```
+```bash
 [defaults]
 callbacks_enabled = profile_tasks
 ```
 
-To launch the project, run the command : `ansible-playbook -i inventory.ini main.playbook.yml`
+## **Process**
+
+1. Copy the master ansible ip address in the common variable `loadbalancer_public_address`
+2. Test node connection : `ansible -i inventory.ini -m ping all`
+3. Launch project : `ansible-playbook -i inventory.ini main.playbook.yml`
+
+## **Test cluster**
+
+```bash
+# Get all nodes
+kubectl get nodes -o wide
+
+# Get nodes resource utilization
+kubectl top nodes 
+
+# Get all pods
+kubectl get pods -A -o wide
+
+# Get pods resource utilization
+kubectl top pods 
+
+# Get all failed pods
+kubectl get pods -A --field-selector=status.phase=Failed
+
+# Get all failed pods
+kubectl get pods -A --field-selector=status.phase=Unknown
+```
