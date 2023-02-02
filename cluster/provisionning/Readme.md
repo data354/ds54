@@ -9,6 +9,11 @@ This folder contains the elements required to provision machines in order to cre
 - [Pulumi](https://www.pulumi.com/docs/get-started/install/)
 - [Gcloud](https://cloud.google.com/sdk/docs/install?hl=fr)
 - Google cloud permissions
+  - Compute Admin
+  - Network Management Admin
+  - Service Account Admin
+  - Service Account Key Admin
+  - Service Account User
 
 ### Steps
 
