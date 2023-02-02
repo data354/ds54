@@ -134,8 +134,8 @@ const master_ansible = createGCEInstance(
 	sudo apt install -y ansible-lint
 	sudo apt install -y git
   `,
-  60,
-  "e2-standard-2"
+	60,
+	"e2-standard-2"
 );
 
 const server_1 = createGCEInstance(
@@ -179,4 +179,6 @@ const server_4 = createGCEInstance(
 // 	"e2-standard-2"
 // );
 
+
+// Get the public IP of the instance
 export const master_ansible_ip = master_ansible.networkInterfaces;
