@@ -169,14 +169,14 @@ const server_4 = createGCEInstance(
 	["k8s"],
 );
 
-const server_5 = createGCEInstance(
-	"server-5",
-	"10.240.0.8",
-	`k8s:${config.require("myPublicKey")}`,
-	["backup"],
-	undefined,
-	80,
-	"e2-standard-2"
-);
+// const server_5 = createGCEInstance(
+// 	"server-5",
+// 	"10.240.0.8",
+// 	`k8s:${config.require("myPublicKey")}`,
+// 	["backup"],
+// 	undefined,
+// 	80,
+// 	"e2-standard-2"
+// );
 
 export const master_ansible_ip = master_ansible.networkInterfaces;

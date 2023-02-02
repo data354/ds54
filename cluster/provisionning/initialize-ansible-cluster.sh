@@ -1,10 +1,10 @@
 # PUBLIC IP
-master_ansible_public_ip="35.188.159.220"
-server_1_public_ip="34.67.232.22"
-server_2_public_ip="35.222.189.127"
-server_3_public_ip="34.132.0.86"
-server_4_public_ip="34.72.60.186"
-server_5_public_ip="35.223.13.195"
+master_ansible_public_ip="34.27.142.8"
+server_1_public_ip="34.133.92.102"
+server_2_public_ip="35.232.130.233"
+server_3_public_ip="35.193.160.43"
+server_4_public_ip="35.226.48.46"
+# server_5_public_ip="35.223.13.195"
 
 # 
 
@@ -13,7 +13,7 @@ ssh-keygen -f "~/.ssh/known_hosts" -R $server_1_public_ip &
 ssh-keygen -f "~/.ssh/known_hosts" -R $server_2_public_ip &
 ssh-keygen -f "~/.ssh/known_hosts" -R $server_3_public_ip &
 ssh-keygen -f "~/.ssh/known_hosts" -R $server_4_public_ip &
-ssh-keygen -f "~/.ssh/known_hosts" -R $server_5_public_ip &
+# ssh-keygen -f "~/.ssh/known_hosts" -R $server_5_public_ip &
 
 wait
 
@@ -22,7 +22,7 @@ ssh-keyscan -H $server_1_public_ip >> ~/.ssh/known_hosts &
 ssh-keyscan -H $server_2_public_ip >> ~/.ssh/known_hosts &
 ssh-keyscan -H $server_3_public_ip >> ~/.ssh/known_hosts &
 ssh-keyscan -H $server_4_public_ip >> ~/.ssh/known_hosts &
-ssh-keyscan -H $server_5_public_ip >> ~/.ssh/known_hosts &
+# ssh-keyscan -H $server_5_public_ip >> ~/.ssh/known_hosts &
 
 wait
 
@@ -40,7 +40,7 @@ ssh k8s@$server_1_public_ip "echo $master_ansible_pub_key > ~/.ssh/authorized_ke
 ssh k8s@$server_2_public_ip "echo $master_ansible_pub_key > ~/.ssh/authorized_keys" &
 ssh k8s@$server_3_public_ip "echo $master_ansible_pub_key > ~/.ssh/authorized_keys" &
 ssh k8s@$server_4_public_ip "echo $master_ansible_pub_key > ~/.ssh/authorized_keys" &
-ssh k8s@$server_5_public_ip "echo $master_ansible_pub_key > ~/.ssh/authorized_keys" &
+# ssh k8s@$server_5_public_ip "echo $master_ansible_pub_key > ~/.ssh/authorized_keys" &
 
 wait
 
@@ -49,7 +49,6 @@ ssh k8s@$master_ansible_public_ip "
 ssh-keyscan -H server-1 > ~/.ssh/known_hosts && \
 ssh-keyscan -H server-2 >> ~/.ssh/known_hosts && \
 ssh-keyscan -H server-3 >> ~/.ssh/known_hosts && \
-ssh-keyscan -H server-4 >> ~/.ssh/known_hosts && \
-ssh-keyscan -H server-5 >> ~/.ssh/known_hosts
+ssh-keyscan -H server-4 >> ~/.ssh/known_hosts
 "
 
