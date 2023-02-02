@@ -11,7 +11,7 @@ This folder contains the elements required to provision machines in order to cre
 ### Steps
 
 1. Update config in `Pulumi.dev.yaml` (use your pubic key)
-2. Use `yarn install` to install
+2. Use `yarn install` to install all dependencies the project need
 3. Run the pulumi script `pulumi up -y ` for compute provisioning
 4. Get compute public address with `gcloud compute instances list --format="value(NAME, EXTERNAL_IP)" | sed 's/-/_/g' | sed -r 's/\s/_public_ip=/'` . Copy and paste the result in `initialize-ansible-cluester.sh` in the section `PUBLIC_IP`
 5. Run script `sh initialize-ansible-cluester.sh `to initialize ansible cluster
