@@ -59,7 +59,7 @@ It takes into account the following features:
 
 ## **Configuration**
 
-To display time taken for tasks when running ansible-playbook, copy and paste the following content in the file `/etc/ansible/ansible.cfg`
+To display time taken for tasks when running ansible-playbook, copy and paste the following content in the file by using `sudo nano -m /etc/ansible/ansible.cfg`
 
 ```bash
 [defaults]
