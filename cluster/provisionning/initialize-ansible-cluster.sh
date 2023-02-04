@@ -1,9 +1,9 @@
 # PUBLIC IP
-master_ansible_public_ip="34.136.244.119"
-server_1_public_ip="35.226.48.46"
-server_2_public_ip="34.29.208.196"
-server_3_public_ip="34.27.142.8"
-server_4_public_ip="35.239.158.81"
+master_ansible_public_ip=35.239.160.208
+server_1_public_ip=34.173.210.114
+server_2_public_ip=104.198.156.22
+server_3_public_ip=35.226.139.149
+server_4_public_ip=34.28.199.15
 
 ssh-keygen -f "~/.ssh/known_hosts" -R $master_ansible_public_ip &
 ssh-keygen -f "~/.ssh/known_hosts" -R $server_1_public_ip &

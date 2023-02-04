@@ -1,0 +1,14 @@
+Provisioning:
+Installer REDHAT sur le VMs GCP au lieu de DEBIAN pour être proche de l'environnnement cible
+Ajouter une machine pour le loadbalancer
+
+
+RKE
+Au niveau des taches ansible d'installation de package Linux, Utiliser ansible.builtin.yum pour les machines REDHAT ( exemple: rke2/roles/prerequises/modules/tasks )
+Regrganiser app.playbook.yml avec ue seule task qui appelle les différents roles.
+A verifier la ligne 43 du rancher agent task
+
+APPS
+Les namespaces doivent respecter la nomenclature oci-xxxx
+
+
