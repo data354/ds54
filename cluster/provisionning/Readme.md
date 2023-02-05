@@ -51,6 +51,6 @@ This folder contains the elements required to provision machines in order to cre
 4. Select or create `dev` stack
 6. Get compute public address with `gcloud compute instances list --format="value(NAME, EXTERNAL_IP)" | sed 's/-/_/g' | sed -r 's/\s/_public_ip=/'`
 7. Replace the corresponding values in the `initialize-ansible-cluester.sh` in the `PUBLIC_IP` section
-8. Run script `sh initialize-ansible-cluester.sh `to initialize ansible cluster
+8. Run script `sh initialize-ansible-cluster.sh `to initialize ansible cluster
 9. Connect to the ansible master machine `ssh k8s@master_ansible_ip`
 10. When you have finished testing, don't forget to delete all resources by using `pulumi down -y`

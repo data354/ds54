@@ -7,8 +7,13 @@ RKE
 Au niveau des taches ansible d'installation de package Linux, Utiliser ansible.builtin.yum pour les machines REDHAT ( exemple: rke2/roles/prerequises/modules/tasks )
 Regrganiser app.playbook.yml avec ue seule task qui appelle les différents roles.
 A verifier la ligne 43 du rancher agent task
+fix rke2 version : INSTALL_RKE2_VERSION
 
 APPS
 Les namespaces doivent respecter la nomenclature oci-xxxx
+Tu peux nous donner accès au repo helm de data354
+je pense qu'il faut rappatrier les values des helms pour pouvoir les configurer par environnement au niveau CI/CD
+Creer un issuer par defaut pour les certificats
+Mettre une tolération sur les pods du controller de l'ingress pour le mettre dans tous les noeuds ( cause : nodeport )
 
 
