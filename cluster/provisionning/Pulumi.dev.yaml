@@ -1,0 +1,4 @@
+config:
+  gce:project: gps-oci
+  gcp:project: gps-oci
+  gce:myPublicKey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC1YU2ry3vFZgHEngCBrc4lsem6+0ZynSblUW8kV/vYwgwQ0Y3iKw9Ai/c6LgifGLzlxLXzdkysqN54xYExaWnMCvuHBhXtGDFY+7yy04WqAPJcCms2z2bc0KpFOieQl8c2UlCs4eKLbqsBqs0Poy/AW/xflCXme+0k5LxOtujfxaUhhg6MZGC5lhAJdGR3vPkgPLoTukWyCiHPYiez1BNozC/K4FmKZE0f6iP01vaJE4BA9B4Bu7EhH9DYaye6bLdpZ2qyD5Nb4YgfUfhGcOyRCebF4R1pTVNlGUUFpturj+WUmOftx/AJp+/aFlkrd4oZKB8BqFX19yQRULy/5MS3 bka@bassirou-monpc
