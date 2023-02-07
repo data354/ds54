@@ -7,6 +7,7 @@ const project = config.require("project")
 // CONFIG
 
 /* SERVICE ACCOUNT CONFIG */
+const imageOs = "projects/rhel-sap-cloud/global/images/rhel-7-9-sap-v20230203"
 
 const service_account = new gcp.serviceaccount.Account("k8s", {
 	accountId: "k8s-account",
@@ -76,7 +77,7 @@ function createGCEInstance(
 		name,
 		bootDisk: {
 			initializeParams: {
-				image: "projects/debian-cloud/global/images/debian-11-bullseye-v20220519",
+				image: imageOs,
 				type: `projects/${project}/zones/us-west4-b/diskTypes/pd-balanced`,
 				size: diskSize,
 			},
@@ -127,12 +128,10 @@ const master_ansible = createGCEInstance(
 	`k8s:${config.require("myPublicKey")}`,
 	["master-ansible"],
 	`
-    sudo echo deb http://ppa.launchpad.net/ansible/ansible/ubuntu focal main >> /etc/apt/sources.list
-	sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
-	sudo apt update
-	sudo apt install -y ansible
-	sudo apt install -y ansible-lint
-	sudo apt install -y git
+	sudo yum update
+	sudo yum install -y ansible
+	sudo yum install -y ansible-lint
+	sudo yum install -y git
   `,
 	60,
 	"e2-standard-2"
