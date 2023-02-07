@@ -8,41 +8,14 @@
       ansible.builtin.command:
         cmd: helm plugin install https://github.com/databus23/helm-diff
 
-- name: Install apps prerequises
+- name: Install apps
   hosts: localhost
   tags: apps
   gather_facts: false
   roles:
     - apps/cert_manager
-
-- name: Install rancher admin
-  hosts: localhost
-  tags: apps
-  gather_facts: false
-  roles:
     - apps/rancher
-
-- name: Install storage proviser (longhorn)
-  hosts: localhost
-  tags: storage
-  gather_facts: false
-  roles:
     - apps/storage
-
-- name: Deploy Monitoring cluster
-  hosts: localhost
-  tags: monitoring
-  roles:
     - apps/monitoring-cluster
-
-- name: Deploy Monitoring stack
-  hosts: localhost
-  tags: monitoring
-  roles:
     - apps/monitoring-stack
-
-- name: Deploy Airflow stack
-  hosts: localhost
-  tags: apps
-  roles:
     - apps/airflow

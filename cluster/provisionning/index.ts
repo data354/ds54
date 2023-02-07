@@ -48,18 +48,18 @@ const cfAllowAllInSubnet = new gcp.compute.Firewall("allow-all-in-subnet", {
 	project
 });
 
-const cfAllowSSHToK8sCluster = new gcp.compute.Firewall("allow-ssh-to-k8s-cluster", {
+const cfAllowSSHToK8sCluster = new gcp.compute.Firewall("allow-ssh-to-ansible-cluster", {
 	network: network.id,
 	sourceRanges: ["0.0.0.0/0"],
-	targetTags: ["k8s", "backup"],
+	targetTags: ["k8s", "proxy", "master-ansible"],
 	allows: [{ protocol: "tcp", ports: ["22"] }],
 	project
 });
 
-const cfAllowAllTCPToMasterAnsible = new gcp.compute.Firewall("allow-all-tcp-to-master-ansible", {
+const cfAllowAllTCPToMasterAnsible = new gcp.compute.Firewall("allow-all-tcp-to-proxy-machine", {
 	network: network.id,
 	sourceRanges: ["0.0.0.0/0"],
-	targetTags: ["master-ansible"],
+	targetTags: ["proxy"],
 	allows: [{ protocol: "tcp" }],
 	project
 });
@@ -168,15 +168,15 @@ const server_4 = createGCEInstance(
 	["k8s"],
 );
 
-// const server_5 = createGCEInstance(
-// 	"server-5",
-// 	"10.240.0.8",
-// 	`k8s:${config.require("myPublicKey")}`,
-// 	["backup"],
-// 	undefined,
-// 	80,
-// 	"e2-standard-2"
-// );
+const server_5 = createGCEInstance(
+	"server-5",
+	"10.240.0.8",
+	`k8s:${config.require("myPublicKey")}`,
+	["proxy"],
+	undefined,
+	80,
+	"e2-standard-2"
+);
 
 
 // Get the public IP of the instance
