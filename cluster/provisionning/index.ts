@@ -140,8 +140,8 @@ const master_ansible = createGCEInstance(
 	"e2-standard-2"
 );
 
-const server_1 = createGCEInstance(
-	"server-1",
+const control_plane_1 = createGCEInstance(
+	"control-plane-1",
 	"10.240.0.4",
 	`k8s:${config.require("myPublicKey")}`,
 	["k8s"],
@@ -150,36 +150,36 @@ const server_1 = createGCEInstance(
 	"e2-standard-4"
 );
 
-const server_2 = createGCEInstance(
-	"server-2",
+const data_plane_2 = createGCEInstance(
+	"data-plane-1",
 	"10.240.0.5",
 	`k8s:${config.require("myPublicKey")}`,
 	["k8s"],
 );
 
-const server_3 = createGCEInstance(
-	"server-3",
+const data_plane_3 = createGCEInstance(
+	"data-plane-2",
 	"10.240.0.6",
 	`k8s:${config.require("myPublicKey")}`,
 	["k8s"],
 );
 
-const server_4 = createGCEInstance(
-	"server-4",
+const data_plane_4 = createGCEInstance(
+	"data-plane-3",
 	"10.240.0.7",
 	`k8s:${config.require("myPublicKey")}`,
 	["k8s"],
 );
 
-const server_5 = createGCEInstance(
-	"server-5",
-	"10.240.0.8",
-	`k8s:${config.require("myPublicKey")}`,
-	["proxy"],
-	undefined,
-	80,
-	"e2-standard-2"
-);
+// const server_5 = createGCEInstance(
+// 	"server-5",
+// 	"10.240.0.8",
+// 	`k8s:${config.require("myPublicKey")}`,
+// 	["proxy"],
+// 	undefined,
+// 	80,
+// 	"e2-standard-2"
+// );
 
 
 // Get the public IP of the instance
