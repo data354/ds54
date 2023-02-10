@@ -2,24 +2,19 @@
 - name: Setting up kube config
   become: true
   block:
-    - name: Download kubeconfig file
-      delegate_to: "{{groups['control_plane'][0]}}"
-      ansible.builtin.slurp:
-        src: /etc/rancher/rke2/rke2.yaml
-      register: kubeconfig
-
     - name: Create kube config Folder
       ansible.builtin.file:
         state: directory
         mode: "707"
         path: "{{ kube_config_directory }}"
 
-    - name: Create local kubeconfig file
-      ansible.builtin.copy:
-        content: "{{ kubeconfig.content | b64decode | from_yaml | to_nice_yaml(indent=2) }}"
+    - name: Download kubeconfig file
+      delegate_to: "{{groups['control_plane'][0]}}"
+      ansible.builtin.fetch:
+        flat: true
+        src: /etc/rancher/rke2/rke2.yaml
         dest: "{{ kube_config_directory }}/config"
         mode: "707"
-        backup: true
 
     - name: Replace api server ip by loadbalancer ip
       ansible.builtin.replace:
@@ -29,33 +24,9 @@
 
 - name: Install Kubectl
   become: true
-  block:
-    - name: Download kubectl bin file
-      delegate_to: "{{groups['control_plane'][0]}}"
-      ansible.builtin.slurp:
-        src: /var/lib/rancher/rke2/bin/kubectl
-      register: kubectl
-
-    - name: Create local kubectl bin file
-      ansible.builtin.copy:
-        content: "{{ kubectl.content | b64decode }}"
-        dest: /usr/bin/kubectl
-        mode: "707"
-        backup: true
-
-- name: Install Helm
-  become: true
-  block:
-    - name: Download helm script
-      ansible.builtin.get_url:
-        owner: root
-        mode: 700
-        dest: /home/k8s/get_helm.sh
-        url: https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
-
-    - name: Run helm script
-      ansible.builtin.command:
-        cmd: bash get_helm.sh
-        chdir: /home/k8s/
-      register: my_output
-      changed_when: my_output.rc != 0
+  delegate_to: "{{groups['control_plane'][0]}}"
+  ansible.builtin.fetch:
+    src: /var/lib/rancher/rke2/bin/kubectl
+    dest: /usr/bin/kubectl
+    flat: true
+    mode: "707"

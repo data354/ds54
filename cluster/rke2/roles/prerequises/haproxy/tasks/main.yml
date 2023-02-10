@@ -24,10 +24,9 @@
       ansible.builtin.template:
         mode: 0700
         src: haproxy.cfg.j2
-        dest: /etc/haproxy/haproxy.cfg
+        dest: "{{ haproxy_config_dir }}/haproxy.cfg"
 
     - name: Set haproxy config directory
       notify: Enable Haproxy Service
       ansible.builtin.command:
-        cmd: haproxy -f {{ haproxy_config_dir }}
-
+        cmd: haproxy -f {{ haproxy_config_dir }}/haproxy.cfg
