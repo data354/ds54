@@ -1,6 +1,6 @@
 ---
 loadbalancer_addresses: ["10.240.0.2", "master-ansible"]
-loadbalancer_public_address: "34.29.157.43"
+loadbalancer_public_address: "35.225.145.114"
 
 public_domain_name: "{{ loadbalancer_public_address }}.sslip.io"
 join_cluster_port: 9345
@@ -15,6 +15,7 @@ install_airflow_requirements: false
 install_airflow: false
 install_monitoring_cluster: false
 install_monitoring_stack: false
+install_rke2_version: v1.24.10+rke2r1
 
 k8s_services_nodeport:
   - name: airflow-ui
