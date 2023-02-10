@@ -24,9 +24,17 @@
 
 - name: Install Kubectl
   become: true
-  delegate_to: "{{groups['control_plane'][0]}}"
-  ansible.builtin.fetch:
-    src: /var/lib/rancher/rke2/bin/kubectl
-    dest: /usr/bin/kubectl
-    flat: true
-    mode: "707"
+  block:
+    - name: Get kubectl bin from control-pane master
+      delegate_to: "{{groups['control_plane'][0]}}"
+      ansible.builtin.fetch:
+        src: /var/lib/rancher/rke2/bin/kubectl
+        dest: ./kubectl
+        flat: true
+        mode: "707"
+
+    - name: Create kubernetes bin file on master ansible
+      ansible.builtin.copy:
+        src: ./kubectl
+        dest: /usr/bin/kubectl
+        mode: "707"
