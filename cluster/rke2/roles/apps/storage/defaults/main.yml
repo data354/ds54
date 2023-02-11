@@ -1,3 +1,4 @@
 ---
 release_name: "longhorn"
 release_namespace: "longhorn-system"
+chart_version: "1.4.0"
