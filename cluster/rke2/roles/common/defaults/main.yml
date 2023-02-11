@@ -1,6 +1,6 @@
 ---
 loadbalancer_addresses: ["10.240.0.2", "master-ansible"]
-loadbalancer_public_address: "35.225.145.114"
+loadbalancer_public_address: "104.154.51.12"
 public_domain_name: "{{ loadbalancer_public_address }}.sslip.io"
 
 join_cluster_port: 9345
@@ -9,30 +9,16 @@ cluster_token: fbf77b7e4e40d763ad4df32ec9e02d877b112eab
 user: k8s
 kube_config_directory: /home/{{ user }}/.kube
 
-install_rancher: false
-install_cert_manager: false
+install_rancher: true
+install_cert_manager: true
 install_longhorn: true
 install_airflow_requirements: false
 install_airflow: false
-install_monitoring_cluster: false
+install_monitoring_cluster: true
 install_monitoring_stack: false
 
 install_rke2_version: v1.24.10+rke2r1
 
-k8s_services_nodeport:
-  - name: airflow-ui
-    port: 30000
-  - name: minio-ui
-    port: 30001
-  - name: postgres
-    port: 30002
-  - name: trino-ui
-    port: 30003
-  - name: grafana-ui
-    port: 30100
-  - name: loki
-    port: 30101
-  - name: prometheus-ui
-    port: 30102
-  - name: fuentd
-    port: 30103
+k8s_services_nodeport: []
+  # - name: airflow-ui
+  #   port: 30000
