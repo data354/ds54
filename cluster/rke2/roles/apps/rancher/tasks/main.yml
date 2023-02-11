@@ -1,6 +1,5 @@
 ---
 - name: Deploy Rancher UI Admin
-  when: install_rancher
   block:
     - name: Add the Rancher Helm repository
       kubernetes.core.helm_repository:

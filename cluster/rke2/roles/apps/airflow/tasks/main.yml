@@ -51,7 +51,6 @@
               namespace: "{{ release_namespace }}"
 
 - name: Install Airflow
-  when: install_airflow
   block:
     - name: Add the Airflow Helm repository
       kubernetes.core.helm_repository:

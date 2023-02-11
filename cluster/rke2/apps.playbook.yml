@@ -4,9 +4,15 @@
   tags: apps
   gather_facts: false
   roles:
-    - apps/cert_manager
-    - apps/rancher
-    - apps/storage
-    - apps/monitoring-cluster
-    - apps/monitoring-stack
-    - apps/airflow
+    - role: apps/cert_manager
+      when: install_cert_manager
+    - role: apps/rancher
+      when: install_rancher
+    - role: apps/storage
+      when: install_longhorn
+    - role: apps/monitoring-cluster
+      when: install_monitoring_cluster
+    - role: apps/monitoring-stack
+      when: install_monitoring_stack
+    - role: apps/airflow
+      when: install_airflow

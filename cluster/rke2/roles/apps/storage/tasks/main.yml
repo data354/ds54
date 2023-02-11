@@ -1,6 +1,5 @@
 ---
 - name: Deploy Longhorn Provider strorage
-  when: install_longhorn
   block:
     - name: Add the Longhorn Helm repository
       kubernetes.core.helm_repository:

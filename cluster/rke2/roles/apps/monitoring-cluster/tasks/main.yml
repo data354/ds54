@@ -1,6 +1,5 @@
 ---
 - name: Deploy Kube-prometheus-stack
-  when: install_monitoring_cluster
   block:
     - name: Install the rancher-monitoring-crd Helm chart
       kubernetes.core.helm:

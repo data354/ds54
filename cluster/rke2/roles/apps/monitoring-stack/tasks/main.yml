@@ -1,6 +1,5 @@
 ---
 - name: Deploy Data monitoring stack
-  when: install_monitoring_stack
   block:
     - name: Create monitoring-stack namespace
       kubernetes.core.k8s:
