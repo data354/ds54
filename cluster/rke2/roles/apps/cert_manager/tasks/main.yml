@@ -18,3 +18,15 @@
         create_namespace: true
         chart_version: "{{ chart_version }}"
         update_repo_cache: true
+
+- name: Create default Issuer Self Signed
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: cert-manager.io/v1
+      kind: Issuer
+      metadata:
+        name: selfsigned-issuer
+        namespace: default
+      spec:
+        selfSigned: {}

@@ -1,13 +1,4 @@
 ---
-- name: Install helm plugin diff
-  hosts: localhost
-  gather_facts: false
-  tasks:
-    - name: Install helm plugin diff
-      failed_when: false
-      ansible.builtin.command:
-        cmd: helm plugin install https://github.com/databus23/helm-diff
-
 - name: Install apps
   hosts: localhost
   tags: apps
