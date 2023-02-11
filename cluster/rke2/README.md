@@ -1,10 +1,10 @@
-# **rke2-setup-ansible**
+# **Rke2 Setup OCI ENV**
 
 ## **Description**
 
 This project is the setup of a production environment based on a kubernetes cluster for the deployment of a Big Data stack. It automates the setup of a highly available k8s cluster on the RKE2 distribution and the installation of all software stacks.
 
-It takes into account the following features:
+**Features :**
 
 * Scaling (up and down)
 * Load balancer et proxy
@@ -13,28 +13,31 @@ It takes into account the following features:
 * Multiple OS family (Debian and Redhat)
 * Idempotence
 
-## **Prerequises**
+## **Resources**
 
 **Nodes**
 
-* An odd number of control plane (minimum 3)
-* One machine as load balancer and proxy
-* Backup
-* Ram: 16+ Gi
-* CPU: 8+
-* Disk: 100Gi+ SSD
-* OS: Ubuntu 20.04
+- **GCP Env**
+    - 1 e2-standard-2: 2vCPU, 8Gi RAM (master-ansible)
+    - 3 e2-standard-8: 8vCPU, 32Gi RAM (data-plane-2, data-plane-3, data-plane-4)
+    - 1 e2-standard-4: 4vCPU, 16Gi RAM (control-plane-1)
 
-**Software**
+- **OCI Env**
+    - 1 master ansible
+    - 1 control-plane
+    - 3 data-plane
 
-* Python 3.8
-* Ansible 2.27
+## **Prerequises**
+
+**OS**
+
+- Ubuntu 20.04
+- RedHat 7.xxx
 
 **Network**
 
-* All node must be in the same private network except the backup node
+* All node must be in the same private network
 * Nodes in the k8s cluster are not accessible via Internet
-* Nodes in the k8s cluster are only accessible via the proxy machine (Master ansible)
 * All node have access to Internet via port 443
 * The master ansible host (proxy & load balancer) is accessible via Internet
 
@@ -42,8 +45,41 @@ It takes into account the following features:
 
 * The proxy (Load balancer) machine is accessible via SSH port 22
 * All host in the k8s cluster are accessible via the proxy machine on port SSH port 22
-* All machine must have a same user with root privileges (proxy and backup machine include)
-* Master ansible public key must be copied on each machine of the k8s cluster to avoid typing password during playbooks execution
+* All machine must have a same user with root privileges
+
+**Software**
+
+* Install Python 3.8 
+```bash
+# Use the following command to install prerequisites for Python before installing it.
+sudo yum install gcc openssl-devel bzip2-devel libffi-devel zlib-devel
+
+# Download Python using following command from python official site
+cd /opt
+wget https://www.python.org/ftp/python/3.8.12/Python-3.8.12.tgz
+
+# Now extract the downloaded package.
+tar xzf Python-3.8.12.tgz
+
+# Use below set of commands to compile python source code on your system using altinstall.
+cd Python-3.8.12
+sudo ./configure --enable-optimizations
+sudo make altinstall
+
+# 
+export PATH=/usr/local/bin:$PATH
+
+# Try to update pip version
+python3.8 -m pip install --upgrade pip
+
+# Now remove downloaded source archive file from your system
+sudo rm Python-3.8.12.tgz
+```
+* Install Ansible [core 2.13.7]
+```bash
+# Install ansible by using pip3
+pip3 install ansible
+```
 
 ## **Playbooks**
 
