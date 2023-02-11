@@ -38,3 +38,26 @@
         src: ./kubectl
         dest: /usr/bin/kubectl
         mode: "707"
+
+- name: Install Helm
+  become: true
+  block:
+    - name: Download helm script
+      ansible.builtin.get_url:
+        owner: root
+        mode: 700
+        dest: /home/k8s/get_helm.sh
+        url: https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+
+    - name: Run helm script
+      failed_when: false
+      ansible.builtin.command:
+        cmd: bash get_helm.sh
+        chdir: /home/k8s/
+      register: my_output
+      changed_when: my_output.rc != 0
+
+    - name: Install helm plugin diff
+      failed_when: false
+      ansible.builtin.command:
+        cmd: helm plugin install https://github.com/databus23/helm-diff
