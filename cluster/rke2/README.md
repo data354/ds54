@@ -56,10 +56,10 @@ sudo yum install gcc openssl-devel bzip2-devel libffi-devel zlib-devel
 
 # Download Python using following command from python official site
 cd /opt
-wget https://www.python.org/ftp/python/3.8.12/Python-3.8.12.tgz
+sudo wget https://www.python.org/ftp/python/3.8.12/Python-3.8.12.tgz
 
 # Now extract the downloaded package.
-tar xzf Python-3.8.12.tgz
+sudo tar xzf Python-3.8.12.tgz
 
 # Use below set of commands to compile python source code on your system using altinstall.
 cd Python-3.8.12
@@ -69,16 +69,25 @@ sudo make altinstall
 # 
 export PATH=/usr/local/bin:$PATH
 
+# Get python version
+python3.8 -V
+
 # Try to update pip version
 python3.8 -m pip install --upgrade pip
 
+# Get pip version
+pip3 -V
+
 # Now remove downloaded source archive file from your system
-sudo rm Python-3.8.12.tgz
+sudo rm /opt/Python-3.8.12.tgz
 ```
 * Install Ansible [core 2.13.7]
 ```bash
 # Install ansible by using pip3
 pip3 install ansible
+
+# Get ansiible version
+ansible --version
 ```
 
 ## **Playbooks**

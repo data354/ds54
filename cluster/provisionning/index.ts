@@ -132,6 +132,7 @@ const master_ansible = createGCEInstance(
 	`
 	sudo yum update
 	sudo yum install -y git
+	sudo yum install -y wget
 	sudo yum install -y nano
   `,
 	60,
