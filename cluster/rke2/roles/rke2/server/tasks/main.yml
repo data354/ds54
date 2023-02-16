@@ -5,7 +5,7 @@
     - name: Copy rke2 install script on the control plane
       ansible.builtin.copy:
         src: get_rke2.sh
-        dest: /home/{{ user }}/rke2-agent
+        dest: /home/{{ user }}/rke2-server
         owner: root
         mode: "700"
 
