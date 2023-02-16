@@ -42,12 +42,12 @@
 - name: Install Helm
   become: true
   block:
-    - name: Download helm script
-      ansible.builtin.get_url:
+    - name: Copy helm install script on the client
+      ansible.builtin.copy:
+        src: get_helm.sh
+        dest: /home/{{ user }}/get_helm.sh
         owner: root
-        mode: 700
-        dest: /home/k8s/get_helm.sh
-        url: https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+        mode: "700"
 
     - name: Run helm script
       failed_when: false

@@ -2,12 +2,12 @@
 - name: Install rke2-agent
   become: true
   block:
-    - name: Download rke2 script
-      ansible.builtin.get_url:
+    - name: Copy rke2 script install on the data plane
+      ansible.builtin.copy:
+        src: get_rke2.sh
+        dest: /home/{{ user }}/rke2-agent
         owner: root
         mode: "700"
-        dest: /home/{{ user }}/rke2-agent
-        url: https://get.rke2.io
 
     - name: Create Config Folder
       ansible.builtin.file:
