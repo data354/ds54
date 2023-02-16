@@ -18,14 +18,15 @@ This project is the setup of a production environment based on a kubernetes clus
 **Nodes**
 
 - **GCP Env**
-    - 1 e2-standard-2: 2vCPU, 8Gi RAM (master-ansible)
-    - 3 e2-standard-8: 8vCPU, 32Gi RAM (data-plane-2, data-plane-3, data-plane-4)
-    - 1 e2-standard-4: 4vCPU, 16Gi RAM (control-plane-1)
 
+  - 1 e2-standard-2: 2vCPU, 8Gi RAM (master-ansible)
+  - 3 e2-standard-8: 8vCPU, 32Gi RAM (data-plane-2, data-plane-3, data-plane-4)
+  - 1 e2-standard-4: 4vCPU, 16Gi RAM (control-plane-1)
 - **OCI Env**
-    - 1 master ansible
-    - 1 control-plane
-    - 3 data-plane
+
+  - 1 master ansible
+  - 1 control-plane
+  - 3 data-plane
 
 ## **Prerequises**
 
@@ -49,7 +50,8 @@ This project is the setup of a production environment based on a kubernetes clus
 
 **Software**
 
-* Install Python 3.8 
+* Install Python 3.8
+
 ```bash
 # Use the following command to install prerequisites for Python before installing it.
 sudo yum install gcc openssl-devel bzip2-devel libffi-devel zlib-devel
@@ -81,7 +83,9 @@ pip3 -V
 # Now remove downloaded source archive file from your system
 sudo rm /opt/Python-3.8.12.tgz
 ```
+
 * Install Ansible [core 2.13.7]
+
 ```bash
 # Install ansible by using pip3
 pip3 install ansible
@@ -116,6 +120,10 @@ callbacks_enabled = profile_tasks
 1. Copy the master ansible ip address in the common variable `loadbalancer_public_address`
 2. Test node connection : `ansible -i inventory.ini -m ping all`
 3. Launch project : `ansible-playbook -i inventory.ini main.playbook.yml`
+
+https://storage.cloud.google.com/oci-vm-files/packages/Python-3.8.12.tgz
+
+https://storage.googleapis.com/oci-vm-files/packages/Python-3.8.12.tgz
 
 ## **Test cluster**
 
