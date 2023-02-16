@@ -21,11 +21,11 @@
         src: rke2-config.j2
         dest: /etc/rancher/rke2/config.yaml
 
-    - name: Install rke2 server on the control plane [RedHat]
+    - name: Install rke2 agent on the data plane [RedHat]
       when: ansible_facts['os_family'] == "RedHat"
       ansible.builtin.yum:
         state: present
-        name: rke2-server
+        name: rke2-agent
 
 - name: Run agent service
   become: true
