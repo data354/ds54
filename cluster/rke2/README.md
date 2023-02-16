@@ -22,6 +22,7 @@ This project is the setup of a production environment based on a kubernetes clus
   - 1 e2-standard-2: 2vCPU, 8Gi RAM (master-ansible)
   - 3 e2-standard-8: 8vCPU, 32Gi RAM (data-plane-2, data-plane-3, data-plane-4)
   - 1 e2-standard-4: 4vCPU, 16Gi RAM (control-plane-1)
+
 - **OCI Env**
 
   - 1 master ansible
@@ -33,7 +34,7 @@ This project is the setup of a production environment based on a kubernetes clus
 **OS**
 
 - Ubuntu 20.04
-- RedHat 7.xxx
+- RedHat 7.9
 
 **Network**
 
@@ -88,7 +89,7 @@ sudo rm /opt/Python-3.8.12.tgz
 
 ```bash
 # Install ansible by using pip3
-pip3 install ansible
+python3.8 -m pip install ansible
 
 # Get ansiible version
 ansible --version
@@ -117,13 +118,10 @@ callbacks_enabled = profile_tasks
 
 ## **Process**
 
-1. Copy the master ansible ip address in the common variable `loadbalancer_public_address`
-2. Test node connection : `ansible -i inventory.ini -m ping all`
-3. Launch project : `ansible-playbook -i inventory.ini main.playbook.yml`
-
-https://storage.cloud.google.com/oci-vm-files/packages/Python-3.8.12.tgz
-
-https://storage.googleapis.com/oci-vm-files/packages/Python-3.8.12.tgz
+1. Change the user name in the common varible following the user you use
+2. Copy the master ansible ip address in the common variable `loadbalancer_public_address`
+3. Test node connection : `ansible -i inventory.ini -m ping all`
+4. Launch project : `ansible-playbook -i inventory.ini main.playbook.yml`
 
 ## **Test cluster**
 
