@@ -2,11 +2,11 @@
 - name: Install rke2-server
   become: true
   block:
-    - name: Copy rke2 install script on the control plane
+    - name: Copy rke2 repo file on the control plane
+      when: ansible_facts['os_family'] == "RedHat"
       ansible.builtin.copy:
-        src: get_rke2.sh
-        dest: /home/{{ user }}/rke2-server
-        owner: root
+        src: rke2.repo
+        dest: /etc/yum.repos.d/rancher-rke2-1-24-latest.repo
         mode: "700"
 
     - name: Create Config Folder
@@ -20,21 +20,12 @@
         mode: "700"
         src: rke2-config.j2
         dest: /etc/rancher/rke2/config.yaml
-
-    - name: Run rke2 script
-      ansible.builtin.command:
-        chdir: /home/{{ user }}/
-        cmd: sh rke2-server
-      environment:
-        INSTALL_RKE2_VERSION: "{{install_rke2_version}}"
-      register: output
-      changed_when: output.rc !=0
-
-    - name: Delete Rke2 script file
-      become: true
-      ansible.builtin.file:
-        state: absent
-        path: /{{ user }}/rke2-server
+    
+    - name: Install rke2 server on the control plane [RedHat]
+      when: ansible_facts['os_family'] == "RedHat"
+      ansible.builtin.yum:
+        state: present
+        name: rke2-server
 
 - name: Run primary server service
   become: true

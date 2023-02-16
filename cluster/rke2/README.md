@@ -22,7 +22,6 @@ This project is the setup of a production environment based on a kubernetes clus
   - 1 e2-standard-2: 2vCPU, 8Gi RAM (master-ansible)
   - 3 e2-standard-8: 8vCPU, 32Gi RAM (data-plane-2, data-plane-3, data-plane-4)
   - 1 e2-standard-4: 4vCPU, 16Gi RAM (control-plane-1)
-
 - **OCI Env**
 
   - 1 master ansible
@@ -33,7 +32,6 @@ This project is the setup of a production environment based on a kubernetes clus
 
 **OS**
 
-- Ubuntu 20.04
 - RedHat 7.9
 
 **Network**
