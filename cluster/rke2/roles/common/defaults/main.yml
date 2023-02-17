@@ -15,6 +15,7 @@ install_airflow_requirements: false
 install_airflow: false
 install_monitoring_cluster: false
 install_monitoring_stack: false
+install_keycloak: true
 
 k8s_services_nodeport:
   - name: airflow-ui

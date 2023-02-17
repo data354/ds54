@@ -19,3 +19,4 @@
     - apps/monitoring-cluster
     - apps/monitoring-stack
     - apps/airflow
+    - apps/keycloak
