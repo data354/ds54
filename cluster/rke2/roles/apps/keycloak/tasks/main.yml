@@ -9,7 +9,7 @@
     - name: Install the keyclok Helm chart
       kubernetes.core.helm:
         name: "{{ release_name }}"
-        chart_ref: keycloak
+        chart_ref: bitnami/keycloak
         release_namespace: "{{ release_namespace }}"
         create_namespace: true
         update_repo_cache: true
@@ -29,6 +29,9 @@
             enabled: true
             servicePort: http
             hostname: "{{ keycloak_hostname }}"
+            tls: false
+            annotations:
+              cert-manager.io/cluster-issuer: selfsigned-cluster-issuer
             extraTls:
               - hosts:
                 -   "{{ keycloak_hostname }}"
