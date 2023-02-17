@@ -12,4 +12,10 @@ Variabiliser
  - postgresqlPassword
  - adminPassword
 Mettre en variable d'inventaire la variable keycloak_hostname car il change par environnement
-
+creer cette resource dans le cluster au deploiement de certmanager
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: selfsigned-cluster-issuer
+spec:
+  selfSigned: {}
