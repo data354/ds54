@@ -10,6 +10,7 @@
       kubernetes.core.helm:
         name: "{{ release_name }}"
         chart_ref: bitnami/keycloak
+        chart_version: 13.0.5
         release_namespace: "{{ release_namespace }}"
         create_namespace: true
         update_repo_cache: true
