@@ -9,6 +9,8 @@ const imageOs = "projects/rhel-sap-cloud/global/images/rhel-7-9-sap-v20230203"
 const gcpRegion = "us-central1"
 const gcpZone = "us-central1-a"
 
+const user="data354"
+
 /* SERVICE ACCOUNT CONFIG */
 
 const service_account = new gcp.serviceaccount.Account("k8s", {
@@ -127,7 +129,7 @@ function createGCEInstance(
 const master_ansible = createGCEInstance(
 	"master-ansible",
 	"10.240.0.2",
-	`k8s:${config.require("myPublicKey")}`,
+	`${user}:${config.require("myPublicKey")}`,
 	["master-ansible"],
 	`
 	sudo yum update
@@ -142,38 +144,35 @@ const master_ansible = createGCEInstance(
 const control_plane_1 = createGCEInstance(
 	"control-plane-1",
 	"10.240.0.4",
-	`k8s:${config.require("myPublicKey")}`,
+	`${user}:${config.require("myPublicKey")}`,
 	["k8s"],
-	undefined,
-	undefined,
-	"e2-standard-4"
 );
 
 const data_plane_2 = createGCEInstance(
 	"data-plane-1",
 	"10.240.0.5",
-	`k8s:${config.require("myPublicKey")}`,
+	`${user}:${config.require("myPublicKey")}`,
 	["k8s"],
 );
 
 const data_plane_3 = createGCEInstance(
 	"data-plane-2",
 	"10.240.0.6",
-	`k8s:${config.require("myPublicKey")}`,
+	`${user}:${config.require("myPublicKey")}`,
 	["k8s"],
 );
 
 const data_plane_4 = createGCEInstance(
 	"data-plane-3",
 	"10.240.0.7",
-	`k8s:${config.require("myPublicKey")}`,
+	`${user}:${config.require("myPublicKey")}`,
 	["k8s"],
 );
 
 // const server_5 = createGCEInstance(
 // 	"server-5",
 // 	"10.240.0.8",
-// 	`k8s:${config.require("myPublicKey")}`,
+// 	`${user}:${config.require("myPublicKey")}`,
 // 	["proxy"],
 // 	undefined,
 // 	80,

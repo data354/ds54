@@ -1,9 +1,9 @@
 # PUBLIC IP
-control_plane_1_public_ip="34.71.129.200"
-data_plane_1_public_ip="34.29.234.26"
-data_plane_2_public_ip="34.68.239.106"
-data_plane_3_public_ip="34.136.94.28"
-master_ansible_public_ip="35.184.166.194"
+control_plane_1_public_ip="34.133.54.202"
+data_plane_1_public_ip="34.69.103.222"
+data_plane_2_public_ip="34.27.200.3"
+data_plane_3_public_ip="35.226.214.183"
+master_ansible_public_ip="34.134.27.71"
 
 ssh-keygen -f "~/.ssh/known_hosts" -R $master_ansible_public_ip &
 ssh-keygen -f "~/.ssh/known_hosts" -R $control_plane_1_public_ip &
@@ -60,11 +60,11 @@ ssh-keyscan -H data-plane-3 >> ~/.ssh/known_hosts
 ssh k8s@$master_ansible_public_ip "ssh-keyscan -H github.com >> ~/.ssh/known_hosts"
 
 # # Cloner le depot rke2
-# ssh k8s@$master_ansible_public_ip "
-# git clone git@github.com:data354/ds54.git && \
-# cd ds54 && git checkout oci-env && cd - && \
-# cp -rd ds54/cluster/rke2 rke2 && \
-# rm -rdf ds54
+ssh k8s@$master_ansible_public_ip "
+git clone git@github.com:data354/ds54.git && \
+cd ds54 && git checkout oci-env && cd - && \
+cp -rd ds54/cluster/rke2 rke2 && \
+rm -rdf ds54
 # "
 
 echo "Master Ansible Public Ip : $master_ansible_public_ip"

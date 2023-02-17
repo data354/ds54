@@ -30,6 +30,12 @@
       ansible.builtin.yum:
         state: present
         name: rke2-server
+    
+    - name: Start rke2-server service
+      ansible.builtin.service:
+        name: rke2-server
+        state: started
+        enabled: true
 
     - name: Wait for port 9345 to become open on the host
       ansible.builtin.wait_for:
@@ -39,6 +45,15 @@
 - name: Run secondary server service
   become: true
   when: not master | bool
-  ansible.builtin.yum:
-    state: present
-    name: rke2-server
+  block:
+    - name: Install rke2-server 
+      ansible.builtin.yum:
+        state: present
+        name: rke2-server
+    
+    - name: Start rke2-server service
+      ansible.builtin.service:
+        name: rke2-server
+        state: started
+        enabled: true
+

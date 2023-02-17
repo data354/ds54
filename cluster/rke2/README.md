@@ -53,7 +53,7 @@ This project is the setup of a production environment based on a kubernetes clus
 
 ```bash
 # Use the following command to install prerequisites for Python before installing it.
-sudo yum install gcc openssl-devel bzip2-devel libffi-devel zlib-devel
+sudo yum install gcc openssl-devel bzip2-devel libffi-devel zlib-devel -y
 
 # Download Python using following command from python official site
 cd /opt
