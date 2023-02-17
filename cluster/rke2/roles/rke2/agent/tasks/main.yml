@@ -2,11 +2,11 @@
 - name: Install rke2-agent
   become: true
   block:
-    - name: Copy rke2 repo file on the data plane
-      when: ansible_facts['os_family'] == "RedHat"
+    - name: Copy rke2 script install on the data plane
       ansible.builtin.copy:
-        src: rke2.repo
-        dest: /etc/yum.repos.d/rancher-rke2-1-24-latest.repo
+        src: get_rke2.sh
+        dest: /home/{{ user }}/rke2-agent
+        owner: root
         mode: "700"
 
     - name: Create Config Folder
@@ -21,17 +21,29 @@
         src: rke2-config.j2
         dest: /etc/rancher/rke2/config.yaml
 
+    - name: Run rke2 script
+      environment:
+        INSTALL_RKE2_TYPE: "agent"
+        INSTALL_RKE2_VERSION: "{{install_rke2_version}}"
+      ansible.builtin.command:
+        chdir: /home/{{ user }}/
+        cmd: sh rke2-agent
+      register: output
+      changed_when: output.rc !=0
+
+    - name: Delete Rke2 script file
+      ansible.builtin.file:
+        state: absent
+        path: /{{ user }}/rke2-agent
+
+- name: Run agent service
+  become: true
+  block:
     - name: Wait for port 9345 to become open on the host
       ansible.builtin.wait_for:
         host: "{{groups['control_plane'][0]}}"
         port: 9345
 
-    - name: Install rke2 agent on the data plane [RedHat]
-      when: ansible_facts['os_family'] == "RedHat"
-      ansible.builtin.yum:
-        state: present
-        name: rke2-agent
-    
     - name: Start rke2-agent service
       ansible.builtin.service:
         name: rke2-agent
