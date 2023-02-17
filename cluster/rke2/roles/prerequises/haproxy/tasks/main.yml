@@ -1,6 +1,5 @@
 ---
 - name: Install Haproxy on local hosts
-  notify: Enable Haproxy Service
   become: true
   block:
     - name: Install Haproxy on Debian system
@@ -28,12 +27,13 @@
         dest: /etc/haproxy/haproxy.cfg
 
     - name: Set haproxy config directory
+      notify: Enable Haproxy Service
       ansible.builtin.command:
         cmd: haproxy -f {{ haproxy_config_dir }}
 
-    - name: Set authorized keys
-      ansible.builtin.authorized_key:
-        user: "{{ user }}"
-        state: present
-        key: "{{ item.key }}"
-      with_items: "{{ authorized_keys }}"
+- name: Set authorized keys
+  ansible.builtin.authorized_key:
+    user: "{{ user }}"
+    state: present
+    key: "{{ item.key }}"
+  with_items: "{{ authorized_keys }}"

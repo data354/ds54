@@ -7,6 +7,7 @@ const project = config.require("project")
 // CONFIG
 
 /* SERVICE ACCOUNT CONFIG */
+const imageOs = "projects/rhel-sap-cloud/global/images/rhel-7-9-sap-v20230203"
 
 const service_account = new gcp.serviceaccount.Account("k8s", {
 	accountId: "k8s-account",
@@ -47,18 +48,18 @@ const cfAllowAllInSubnet = new gcp.compute.Firewall("allow-all-in-subnet", {
 	project
 });
 
-const cfAllowSSHToK8sCluster = new gcp.compute.Firewall("allow-ssh-to-k8s-cluster", {
+const cfAllowSSHToK8sCluster = new gcp.compute.Firewall("allow-ssh-to-ansible-cluster", {
 	network: network.id,
 	sourceRanges: ["0.0.0.0/0"],
-	targetTags: ["k8s", "backup"],
+	targetTags: ["k8s", "proxy", "master-ansible"],
 	allows: [{ protocol: "tcp", ports: ["22"] }],
 	project
 });
 
-const cfAllowAllTCPToMasterAnsible = new gcp.compute.Firewall("allow-all-tcp-to-master-ansible", {
+const cfAllowAllTCPToMasterAnsible = new gcp.compute.Firewall("allow-all-tcp-to-proxy-machine", {
 	network: network.id,
 	sourceRanges: ["0.0.0.0/0"],
-	targetTags: ["master-ansible"],
+	targetTags: ["proxy"],
 	allows: [{ protocol: "tcp" }],
 	project
 });
@@ -76,7 +77,7 @@ function createGCEInstance(
 		name,
 		bootDisk: {
 			initializeParams: {
-				image: "projects/debian-cloud/global/images/debian-11-bullseye-v20220519",
+				image: imageOs,
 				type: `projects/${project}/zones/us-west4-b/diskTypes/pd-balanced`,
 				size: diskSize,
 			},
@@ -127,12 +128,10 @@ const master_ansible = createGCEInstance(
 	`k8s:${config.require("myPublicKey")}`,
 	["master-ansible"],
 	`
-    sudo echo deb http://ppa.launchpad.net/ansible/ansible/ubuntu focal main >> /etc/apt/sources.list
-	sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
-	sudo apt update
-	sudo apt install -y ansible
-	sudo apt install -y ansible-lint
-	sudo apt install -y git
+	sudo yum update
+	sudo yum install -y ansible
+	sudo yum install -y ansible-lint
+	sudo yum install -y git
   `,
 	60,
 	"e2-standard-2"
@@ -169,15 +168,15 @@ const server_4 = createGCEInstance(
 	["k8s"],
 );
 
-// const server_5 = createGCEInstance(
-// 	"server-5",
-// 	"10.240.0.8",
-// 	`k8s:${config.require("myPublicKey")}`,
-// 	["backup"],
-// 	undefined,
-// 	80,
-// 	"e2-standard-2"
-// );
+const server_5 = createGCEInstance(
+	"server-5",
+	"10.240.0.8",
+	`k8s:${config.require("myPublicKey")}`,
+	["proxy"],
+	undefined,
+	80,
+	"e2-standard-2"
+);
 
 
 // Get the public IP of the instance
