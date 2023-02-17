@@ -17,6 +17,7 @@
           fullnameOverride: keycloak
           auth:
             adminUser: admin
+            adminPassword: keycloak_oci
           postgresql:
             enabled: true
             postgresqlUsername: keycloak
