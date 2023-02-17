@@ -1,12 +1,10 @@
 ---
 - name: Setup Rke2 server
   hosts: control_plane
-  gather_facts: false
   roles:
     - rke2/server
 
 - name: Setup Rke2 agent
   hosts: data_plane
-  gather_facts: false
   roles:
     - rke2/agent
