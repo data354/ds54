@@ -49,27 +49,3 @@
             - kind: ServiceAccount
               name: stack-aiflow-worker
               namespace: "{{ release_namespace }}"
-
-- name: Install Airflow
-  block:
-    - name: Add the Airflow Helm repository
-      kubernetes.core.helm_repository:
-        name: stack
-        repo_url: "{{ stack_repo }}"
-
-    - name: Install the airflow Helm chart
-      kubernetes.core.helm:
-        name: "{{ release_name }}"
-        chart_ref: stack/modernstack
-        release_namespace: "{{ release_namespace }}"
-        create_namespace: true
-        update_repo_cache: true
-        values: postgres.enabled=true
-          airflow.enabled=true
-          airflow.dags.gitSync.branch=master
-          airflow.dags.gitSync.enabled=true
-          airflow.dags.gitSync.repo={{ dags_repo }}
-          airflow.dags.gitSync.sshKeySecret={{ sshKeySecret }}
-          airflow.dags.gitSync.subPath={{ subpath }}
-          airflow.images.airflow.repository={{ img_registry }}
-          airflow.images.airflow.tag={{ tag }}

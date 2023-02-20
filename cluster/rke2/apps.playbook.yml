@@ -14,5 +14,5 @@
       when: install_monitoring_cluster
     - role: apps/monitoring-stack
       when: install_monitoring_stack
-    - role: apps/airflow
-      when: install_airflow
+    - role: apps/airflow_requirements
+      when: install_airflow_requirements
