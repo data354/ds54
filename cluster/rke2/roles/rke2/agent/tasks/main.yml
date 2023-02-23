@@ -31,7 +31,7 @@
     - name: Run rke2 script
       environment:
         INSTALL_RKE2_TYPE: "agent"
-        INSTALL_RKE2_VERSION: "{{install_rke2_version}}"
+        INSTALL_RKE2_VERSION: "{{ install_rke2_version }}"
       ansible.builtin.command:
         chdir: /home/{{ user }}/
         cmd: sh rke2-agent
