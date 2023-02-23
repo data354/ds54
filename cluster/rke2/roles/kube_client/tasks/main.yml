@@ -20,7 +20,7 @@
       ansible.builtin.replace:
         path: "{{ kube_config_directory }}/config"
         regexp: '127\.0\.0\.1'
-        replace: '{{ loadbalancer_addresses[0] }}'
+        replace: '{{ loadbalancer_address }}'
 
 - name: Install Kubectl
   become: true
@@ -28,7 +28,7 @@
     - name: Get kubectl bin from control-pane master
       delegate_to: "{{groups['control_plane'][0]}}"
       ansible.builtin.fetch:
-        src: /var/lib/rancher/rke2/bin/kubectl
+        src: "{{ rancher_data_dir }}/bin/kubectl"
         dest: ./kubectl
         flat: true
         mode: "707"

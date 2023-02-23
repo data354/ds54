@@ -2,5 +2,6 @@
 server: https://{{ loadbalancer_address }}:{{ join_cluster_port }}
 {% endif %}
 token: {{ cluster_token }}
+data-dir: {{ rke2_data_dir }}
 tls-san:
     - {{ loadbalancer_address }}

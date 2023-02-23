@@ -34,7 +34,7 @@
         INSTALL_RKE2_VERSION: "{{ install_rke2_version }}"
       ansible.builtin.command: 
         chdir: /home/{{ user }}/
-        cmd: sh rke2-agent --data-dir {{ rancher_data_dir }}
+        cmd: sh rke2-agent
       register: output
       changed_when: output.rc !=0
 

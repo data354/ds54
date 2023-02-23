@@ -31,7 +31,7 @@
     - name: Run rke2 script
       ansible.builtin.command:
         chdir: /home/{{ user }}/
-        cmd: sh rke2-server --data-dir {{ rancher_data_dir }}
+        cmd: sh rke2-server
       environment:
         INSTALL_RKE2_VERSION: "{{ install_rke2_version }}"
       register: output
