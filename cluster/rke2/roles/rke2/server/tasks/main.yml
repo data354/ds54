@@ -2,6 +2,13 @@
 - name: Install rke2-server
   become: true
   block:
+    - name: Setup proxy environment for rke2-server
+      ansible.builtin.copy:
+        src: proxy-env
+        dest: /etc/default/rke2-server
+        owner: root
+        mode: "700"
+
     - name: Copy rke2 install script on the control plane
       ansible.builtin.copy:
         src: get_rke2.sh

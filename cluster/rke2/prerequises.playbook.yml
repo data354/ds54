@@ -1,22 +1,29 @@
 ---
+- name: Setup proxy
+  hosts: all
+  roles:
+    - role: prerequises/proxy-setup
+      when: use_proxy
+
 - name: Install haproxy
   hosts: localhost
   tags:
-   - proxy
-   - master
+    - lb
   roles:
     - prerequises/haproxy
 
 - name: Install open iscsi
-  tags: packages
+  tags:
+    - packages
+    - k8s
   hosts: k8s
   roles:
     - prerequises/open_iscsi
 
-- name: Install module
-  tags: 
+- name: Install python module
+  tags:
     - packages
-    - master
+    - lb
   hosts: localhost
   roles:
     - prerequises/modules

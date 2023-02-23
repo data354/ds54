@@ -1,7 +1,8 @@
 ---
-loadbalancer_addresses: ["10.240.0.2", "master-ansible"]
-loadbalancer_public_address: "104.154.51.12"
+loadbalancer_addresses: ["10.242.36.133", "master-ansible"]
+loadbalancer_public_address: "10.242.36.133"
 public_domain_name: "{{ loadbalancer_public_address }}.sslip.io"
+use_proxy: true
 
 user: data354
 apiserver_port: 6443
