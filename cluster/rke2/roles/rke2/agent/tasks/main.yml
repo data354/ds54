@@ -30,18 +30,17 @@
 
     - name: Run rke2 script
       environment:
-        INSTALL_RKE2_TYPE: "agent"
         INSTALL_RKE2_VERSION: "{{ install_rke2_version }}"
-      ansible.builtin.command:
+      ansible.builtin.command: 
         chdir: /home/{{ user }}/
-        cmd: sh rke2-agent
+        cmd: sh rke2-agent --data-dir {{ rancher_data_dir }}
       register: output
       changed_when: output.rc !=0
 
     - name: Delete Rke2 script file
       ansible.builtin.file:
         state: absent
-        path: /{{ user }}/rke2-agent
+        path: /home/{{ user }}/rke2-agent
 
 - name: Run agent service
   become: true

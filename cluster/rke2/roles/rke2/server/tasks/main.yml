@@ -31,7 +31,7 @@
     - name: Run rke2 script
       ansible.builtin.command:
         chdir: /home/{{ user }}/
-        cmd: sh rke2-server
+        cmd: sh rke2-server --data-dir {{ rancher_data_dir }}
       environment:
         INSTALL_RKE2_VERSION: "{{ install_rke2_version }}"
       register: output
@@ -41,7 +41,7 @@
       become: true
       ansible.builtin.file:
         state: absent
-        path: /{{ user }}/rke2-server
+        path: /home/{{ user }}/rke2-server
 
 - name: Run primary server service
   become: true
