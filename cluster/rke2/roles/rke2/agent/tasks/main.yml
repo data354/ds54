@@ -39,10 +39,10 @@
 - name: Run agent service
   become: true
   block:
-    - name: Wait for port 9345 to become open on the host
+    - name: Wait for port 9345 to become open on the control-plane
       ansible.builtin.wait_for:
-        host: "{{groups['control_plane'][0]}}"
-        port: 9345
+        host: "{{ loadbalancer_addresses[0] }}"
+        port: "{{ join_cluster_port }}"
 
     - name: Start rke2-agent service
       ansible.builtin.service:

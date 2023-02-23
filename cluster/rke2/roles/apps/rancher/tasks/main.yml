@@ -17,7 +17,3 @@
         values:
           hostname={{ rancher_hostname }}
           bootstrapPassword={{ rancher_bootstrapPassword }}
-          ingress.tls.source={{ rancher_ingress_tls_source }}
-          letsEncrypt.email={{ rancher_letsEncrypt_email }}
-          letsEncrypt.ingress.class={{ rancher_letsEncrypt_ingress_class }}
-          letsEncrypt.environment={{ rancher_letsEncrypt_env }}
