@@ -116,8 +116,8 @@ callbacks_enabled = profile_tasks
 
 ## **Process**
 
-1. Change the user name in the common varible following the user you use
-2. Copy the master ansible ip address in the common variable `loadbalancer_public_address`
+1. If tou don't use proxy in your environment, set the common variable `use_proxy` to false
+2. Copy the master ansible ip address in the commons variables `loadbalancer_public_address` and 
 3. Test node connection : `ansible -i inventory.ini -m ping all`
 4. Launch project : `ansible-playbook -i inventory.ini main.playbook.yml`
 

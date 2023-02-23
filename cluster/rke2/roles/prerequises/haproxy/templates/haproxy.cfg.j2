@@ -66,7 +66,7 @@ listen kubernetes-ingress-https-services
     server {{ item }} {{ item }}:443 check check-ssl verify none inter 10000
     {% endfor %}
 
-{% for item in k8s_services_nodeport -%}
+{% for item in k8s_services_nodeport %}
 listen {{ item.name }}-nodeport
     bind *:{{ item.port }}
     mode tcp

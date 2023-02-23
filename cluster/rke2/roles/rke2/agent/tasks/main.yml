@@ -48,7 +48,7 @@
   block:
     - name: Wait for port 9345 to become open on the control-plane
       ansible.builtin.wait_for:
-        host: "{{ loadbalancer_addresses[0] }}"
+        host: "{{ loadbalancer_address }}"
         port: "{{ join_cluster_port }}"
 
     - name: Start rke2-agent service

@@ -1,8 +1,6 @@
 {% if master | bool == false %}
-server: https://{{ loadbalancer_addresses[0] }}:{{ join_cluster_port }}
+server: https://{{ loadbalancer_address }}:{{ join_cluster_port }}
 {% endif %}
 token: {{ cluster_token }}
 tls-san:
-{% for item in loadbalancer_addresses -%}
-    - {{ item }}
-{% endfor -%}
+    - {{ loadbalancer_address }}
