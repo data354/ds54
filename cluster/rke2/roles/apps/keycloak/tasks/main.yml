@@ -1,0 +1,40 @@
+- name: Install Keycloak
+  when: install_keycloak
+  block:
+    - name: Add the Keyclok Helm repository
+      kubernetes.core.helm_repository:
+        name: bitnami
+        repo_url: "{{ keycloak_repo }}"
+
+    - name: Install the keyclok Helm chart
+      kubernetes.core.helm:
+        name: "{{ release_name }}"
+        chart_ref: bitnami/keycloak
+        chart_version: 13.0.5
+        release_namespace: "{{ release_namespace }}"
+        create_namespace: true
+        update_repo_cache: true
+        values:
+          fullnameOverride: keycloak
+          auth:
+            adminUser: admin
+            adminPassword: keycloak_oci
+          postgresql:
+            enabled: true
+            postgresqlUsername: keycloak
+            postgresqlPassword: keycloak
+            postgresqlDatabase: keycloak
+          proxyAddressForwarding: true
+          service:
+            type: ClusterIP
+          ingress:
+            enabled: true
+            servicePort: http
+            hostname: "{{ keycloak_hostname }}"
+            tls: false
+            annotations:
+              cert-manager.io/cluster-issuer: selfsigned-cluster-issuer
+            extraTls:
+              - hosts:
+                -   "{{ keycloak_hostname }}"
+                secretName: identity-certificate-secret

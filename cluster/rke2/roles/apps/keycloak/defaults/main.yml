@@ -1,0 +1,5 @@
+---
+keycloak_hostname: "keycloak-{{ loadbalancer_public_address }}.sslip.io"
+release_name: "keycloak"
+release_namespace: "oci-keycloak"
+keycloak_repo: "https://charts.bitnami.com/bitnami"

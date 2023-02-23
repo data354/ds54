@@ -1,16 +1,17 @@
 # PUBLIC IP
-master_ansible_public_ip=34.29.157.43
-server_1_public_ip=35.223.160.236
-server_2_public_ip=35.232.151.104
-server_3_public_ip=34.70.77.133
-server_4_public_ip=34.133.118.225
+master_ansible_public_ip="35.238.67.220"
+server_1_public_ip="35.225.145.114"
+server_2_public_ip="34.71.123.252"
+server_3_public_ip="34.173.168.89"
+server_4_public_ip="35.232.251.129"
+server_5_public_ip="35.192.211.36"
 
 ssh-keygen -f "~/.ssh/known_hosts" -R $master_ansible_public_ip &
 ssh-keygen -f "~/.ssh/known_hosts" -R $server_1_public_ip &
 ssh-keygen -f "~/.ssh/known_hosts" -R $server_2_public_ip &
 ssh-keygen -f "~/.ssh/known_hosts" -R $server_3_public_ip &
 ssh-keygen -f "~/.ssh/known_hosts" -R $server_4_public_ip &
-# ssh-keygen -f "~/.ssh/known_hosts" -R $server_5_public_ip &
+ssh-keygen -f "~/.ssh/known_hosts" -R $server_5_public_ip &
 
 wait
 
@@ -19,7 +20,7 @@ ssh-keyscan -H $server_1_public_ip >> ~/.ssh/known_hosts &
 ssh-keyscan -H $server_2_public_ip >> ~/.ssh/known_hosts &
 ssh-keyscan -H $server_3_public_ip >> ~/.ssh/known_hosts &
 ssh-keyscan -H $server_4_public_ip >> ~/.ssh/known_hosts &
-# ssh-keyscan -H $server_5_public_ip >> ~/.ssh/known_hosts &
+ssh-keyscan -H $server_5_public_ip >> ~/.ssh/known_hosts &
 
 wait
 
@@ -47,7 +48,7 @@ ssh k8s@$server_1_public_ip "echo $master_ansible_pub_key > ~/.ssh/authorized_ke
 ssh k8s@$server_2_public_ip "echo $master_ansible_pub_key > ~/.ssh/authorized_keys" &
 ssh k8s@$server_3_public_ip "echo $master_ansible_pub_key > ~/.ssh/authorized_keys" &
 ssh k8s@$server_4_public_ip "echo $master_ansible_pub_key > ~/.ssh/authorized_keys" &
-# ssh k8s@$server_5_public_ip "echo $master_ansible_pub_key > ~/.ssh/authorized_keys" &
+ssh k8s@$server_5_public_ip "echo $master_ansible_pub_key > ~/.ssh/authorized_keys" &
 
 wait
 
@@ -56,7 +57,8 @@ ssh k8s@$master_ansible_public_ip "
 ssh-keyscan -H server-1 > ~/.ssh/known_hosts && \
 ssh-keyscan -H server-2 >> ~/.ssh/known_hosts && \
 ssh-keyscan -H server-3 >> ~/.ssh/known_hosts && \
-ssh-keyscan -H server-4 >> ~/.ssh/known_hosts
+ssh-keyscan -H server-4 >> ~/.ssh/known_hosts && \
+ssh-keyscan -H server-5 >> ~/.ssh/known_hosts
 "
 
 # Ajouter l'dresse de github.com pour faciliter la connexion sans interruption

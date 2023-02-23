@@ -1,13 +1,15 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as gcp from "@pulumi/gcp";
 
+// CONFIG
 const config = new pulumi.Config("gce");
 const project = config.require("project")
 
-// CONFIG
+const imageOs = "projects/rhel-sap-cloud/global/images/rhel-7-9-sap-v20230203"
+const gcpRegion = "us-central1"
+const gcpZone = "us-central1-a"
 
 /* SERVICE ACCOUNT CONFIG */
-const imageOs = "projects/rhel-sap-cloud/global/images/rhel-7-9-sap-v20230203"
 
 const service_account = new gcp.serviceaccount.Account("k8s", {
 	accountId: "k8s-account",
@@ -27,7 +29,7 @@ const network = new gcp.compute.Network("kube-network", {
 const subnet = new gcp.compute.Subnetwork("cluster-a", {
 	network: network.id,
 	ipCidrRange: "10.240.0.0/24",
-	region: "us-central1",
+	region: gcpRegion,
 	project
 });
 
@@ -59,7 +61,7 @@ const cfAllowSSHToK8sCluster = new gcp.compute.Firewall("allow-ssh-to-ansible-cl
 const cfAllowAllTCPToMasterAnsible = new gcp.compute.Firewall("allow-all-tcp-to-proxy-machine", {
 	network: network.id,
 	sourceRanges: ["0.0.0.0/0"],
-	targetTags: ["proxy"],
+	targetTags: ["proxy", "master-ansible"],
 	allows: [{ protocol: "tcp" }],
 	project
 });
@@ -100,7 +102,7 @@ function createGCEInstance(
 		machineType: machineType,
 		project: project,
 		tags: tags,
-		zone: "us-central1-a",
+		zone: gcpZone,
 		shieldedInstanceConfig: {
 			enableVtpm: true,
 			enableIntegrityMonitoring: true,
@@ -132,6 +134,7 @@ const master_ansible = createGCEInstance(
 	sudo yum install -y ansible
 	sudo yum install -y ansible-lint
 	sudo yum install -y git
+	sudo yum install -y nano
   `,
 	60,
 	"e2-standard-2"
