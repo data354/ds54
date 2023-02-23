@@ -1,4 +1,5 @@
 - name: Setup proxy environment variables
+  become: true
   ansible.builtin.copy:
     src: proxy-env
     dest: /etc/environment

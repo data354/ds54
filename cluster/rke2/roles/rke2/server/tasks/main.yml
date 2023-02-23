@@ -4,7 +4,7 @@
   block:
     - name: Setup proxy environment for rke2-server
       ansible.builtin.copy:
-        src: proxy-env
+        src: proxy-rke2
         dest: /etc/default/rke2-server
         owner: root
         mode: "700"
