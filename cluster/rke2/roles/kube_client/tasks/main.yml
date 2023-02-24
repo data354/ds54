@@ -28,7 +28,7 @@
     - name: Get kubectl bin from control-pane master
       delegate_to: "{{groups['control_plane'][0]}}"
       ansible.builtin.fetch:
-        src: "{{ rancher_data_dir }}/bin/kubectl"
+        src: "{{ rke2_data_dir }}/bin/kubectl"
         dest: ./kubectl
         flat: true
         mode: "707"
