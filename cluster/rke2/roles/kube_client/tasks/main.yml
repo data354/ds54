@@ -53,7 +53,7 @@
       failed_when: false
       ansible.builtin.command:
         cmd: bash get_helm.sh
-        chdir: /home/k8s/
+        chdir: /home/{{ user }}/
       register: my_output
       changed_when: my_output.rc != 0
 
