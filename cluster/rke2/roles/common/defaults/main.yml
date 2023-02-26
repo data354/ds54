@@ -13,7 +13,7 @@ cluster_token: fbf77b7e4e40d763ad4df32ec9e02d877b112eab
 install_rancher: true
 install_cert_manager: true
 install_longhorn: true
-install_keycloack: true
+install_keycloak: true
 install_airflow_requirements: true
 install_monitoring_cluster: false
 install_monitoring_stack: false
