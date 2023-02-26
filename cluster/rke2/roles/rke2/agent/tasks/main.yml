@@ -3,6 +3,7 @@
   become: true
   block:
     - name: Setup proxy environment for rke2-agent
+      when: use_proxy
       ansible.builtin.copy:
         src: proxy-rke2
         dest: /etc/default/rke2-agent
