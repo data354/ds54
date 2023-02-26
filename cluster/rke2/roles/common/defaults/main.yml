@@ -7,12 +7,13 @@ user: data354
 apiserver_port: 6443
 join_cluster_port: 9345
 kube_config_directory: /home/{{ user }}/.kube
-rke2_data_dir: /home/{{ user }}/rancher/rke2
+rke2_data_dir: /var/lib/rancher/rke2
 cluster_token: fbf77b7e4e40d763ad4df32ec9e02d877b112eab
 
 install_rancher: true
 install_cert_manager: true
 install_longhorn: true
+install_keycloack: true
 install_airflow_requirements: true
 install_monitoring_cluster: false
 install_monitoring_stack: false

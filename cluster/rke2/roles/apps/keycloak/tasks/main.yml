@@ -1,0 +1,19 @@
+---
+- name: Deploy Rancher UI Admin
+  block:
+    - name: Add the Rancher Helm repository
+      kubernetes.core.helm_repository:
+        name: rancher-stable
+        repo_url: "https://releases.rancher.com/server-charts/stable"
+
+    - name: Install the rancher Helm chart
+      kubernetes.core.helm:
+        name: "{{ release_name }}"
+        chart_ref: rancher-stable/rancher
+        chart_version: "{{ chart_version }}"
+        release_namespace: "{{ release_namespace }}"
+        create_namespace: true
+        update_repo_cache: true
+        values:
+          hostname={{ rancher_hostname }}
+          bootstrapPassword={{ rancher_bootstrapPassword }}
