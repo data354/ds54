@@ -1,9 +1,9 @@
 # PUBLIC IP
-control_plane_1_public_ip="34.123.22.116"
-data_plane_1_public_ip="34.123.208.156"
-data_plane_2_public_ip="34.173.167.11"
-data_plane_3_public_ip="34.133.169.80"
-master_ansible_public_ip="34.66.40.0"
+control_plane_1_public_ip="34.70.34.254"
+data_plane_1_public_ip="104.198.197.138"
+data_plane_2_public_ip="104.198.75.32"
+data_plane_3_public_ip="34.30.97.176"
+master_ansible_public_ip="34.28.32.221"
 
 ssh-keygen -f "~/.ssh/known_hosts" -R $master_ansible_public_ip &
 ssh-keygen -f "~/.ssh/known_hosts" -R $control_plane_1_public_ip &

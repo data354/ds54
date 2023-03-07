@@ -24,7 +24,7 @@
     state: present
     definition:
       apiVersion: cert-manager.io/v1
-      kind: Issuer
+      kind: ClusterIssuer
       metadata:
         name: selfsigned-cluster-issuer
         namespace: default
