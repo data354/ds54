@@ -1,4 +1,21 @@
 ---
+- name: Create ihm-oci Namespace
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: "{{ namespace }}"
+
+- name: Create secret from artifact-registry sa
+  ansible.builtin.cmd: kubectl create secret docker-registry artifact-registry \
+    --docker-server={{ registry_url }} \
+    --docker-email={{ sa_email }} \
+    --docker-username=_json_key \
+    --docker-password="$(cat sa.json)"
+    --namespace {{ namespace }}
+
 - name: Deployment IHM Front
   kubernetes.core.k8s:
     state: present
