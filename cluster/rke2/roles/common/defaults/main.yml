@@ -19,7 +19,7 @@ install_airflow_requirements: true
 install_monitoring_cluster: false
 install_monitoring_stack: false
 
-install_rke2_version: v1.24.10+rke2r1
+install_rke2_version: v1.23.16+rke2r1
 
 k8s_services_nodeport:
   - name: svc-1
