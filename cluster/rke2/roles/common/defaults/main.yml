@@ -14,6 +14,7 @@ install_rancher: true
 install_cert_manager: true
 install_longhorn: true
 install_keycloak: true
+install_ihm: true
 install_airflow_requirements: true
 install_monitoring_cluster: false
 install_monitoring_stack: false

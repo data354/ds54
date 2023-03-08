@@ -1,0 +1,5 @@
+---
+- name: Deployment IHM Front
+  kubernetes.core.k8s:
+    state: present
+    src: "front.yml"

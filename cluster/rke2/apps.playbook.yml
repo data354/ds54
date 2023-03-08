@@ -16,5 +16,7 @@
       when: install_monitoring_stack
     - role: apps/keycloak
       when: install_keycloak
+    - role: apps/ihm
+      when: install_ihm
     - role: apps/airflow_requirements
       when: install_airflow_requirements
