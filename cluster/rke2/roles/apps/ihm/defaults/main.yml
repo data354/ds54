@@ -1,0 +1,4 @@
+---
+registry_url: https://us-central1-docker.pkg.dev
+sa_email: gps-oci@gps-oci.iam.gserviceaccount.com
+namespace: oci-ihm

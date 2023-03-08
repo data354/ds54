@@ -8,7 +8,15 @@
       metadata:
         name: "{{ namespace }}"
 
-- name: Create secret from artifact-registry sa
+- name: Confirmation de la connexion avec artifact registry
+  ansible.builtin.pause:
+    prompt: |
+
+      Pour assurer la connection avec artifact registry vous devez ajouter la cle
+      json de votre service accoubt dans le ficher roles/apps/ihm/files/sa.json. Une 
+      fois la connection effectuée le fichier sera supprimé.
+
+- name: Create secret from artifact-registry service account
   ansible.builtin.cmd: kubectl create secret docker-registry artifact-registry \
     --docker-server={{ registry_url }} \
     --docker-email={{ sa_email }} \
