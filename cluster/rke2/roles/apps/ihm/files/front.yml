@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: "{{ namespace }}"
+  namespace: oci-ihm
   name: ihm-front
   labels:
     app: ihm-front
@@ -14,11 +14,9 @@ spec:
       labels:
         app: ihm-front
     spec:
-      imagePullSecrets:
-        - name: artifact-registry
       containers:
         - name: ihm-front
-          image: us-central1-docker.pkg.dev/gps-oci/gps-oci-front/gps-oci-image:latest
+          image: almoustapha/gps-oci-api:oci
           imagePullPolicy: Always
           ports:
             - containerPort: 80
@@ -26,7 +24,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: "{{ namespace }}"
+  namespace: oci-ihm
   name: ihm-front-svc
 spec:
   selector:
@@ -40,7 +38,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  namespace: "{{ namespace }}"
+  namespace: oci-ihm
   name: ihm-ingress
   annotations:
     cert-manager.io/cluster-issuer: selfsigned-cluster-issuer
@@ -49,7 +47,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: ihm-{{ loadbalancer_address }}.sslip.io
+    - host: 10.242.36.138.sslip.io
       http:
         paths:
           - backend:
@@ -59,7 +57,3 @@ spec:
                   name: http
             path: /
             pathType: ImplementationSpecific
-  tls:
-    - hosts:
-        - ihm-{{ loadbalancer_address }}.sslip.io
-      secretName: identity-certificate-secret

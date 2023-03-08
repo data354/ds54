@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: oci-ihm
+  name: ihm-back
+  labels:
+    app: ihm-back
+spec:
+  selector:
+    matchLabels:
+      app: ihm-back
+  template:
+    metadata:
+      labels:
+        app: ihm-back
+    spec:
+      containers:
+        - name: ihm-back
+          image: almoustapha/gps-oci-api:oci
+          imagePullPolicy: Always
+          env:
+            - name: MINIO_ENDPOINT
+              value: http://datastack-minio
+            - name: MINIO_PORT
+              value: 9000
+            - name: MINIO_ACCESS_KEY
+              value: RAacjEMGZIrn2IYd
+            - name: MINIO_SECRET_KEY
+              value: ChtN4yCj58MTpUrnbdj5Rlkm4lt57jPx
+            - name: MINIO_BUCKETNAME
+              value: gpsoci
+            - name: DATABASE_URL
+              value: postgresql://root:root@datastack-bd-pg-service:5432/gps_db?schema=public
+          ports:
+            - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: oci-ihm
+  name: ihm-back-svc
+spec:
+  selector:
+    app: ihm-back
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
