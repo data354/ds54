@@ -1,5 +1,0 @@
-APPS
-Les namespaces doivent respecter la nomenclature oci-xxxx
-je pense qu'il faut rappatrier les values des helms pour pouvoir les configurer par environnement au niveau CI/CD
-
-
