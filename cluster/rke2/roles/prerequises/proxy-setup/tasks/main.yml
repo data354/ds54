@@ -1,7 +1,7 @@
 - name: Setup proxy environment variables
   become: true
-  ansible.builtin.copy:
-    src: proxy-env
+  ansible.builtin.template:
+    src: proxy-env.j2
     dest: /etc/environment
     owner: root
     mode: "644"

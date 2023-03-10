@@ -20,7 +20,7 @@ spec:
           imagePullPolicy: Always
           env:
             - name: MINIO_ENDPOINT
-              value: http://datastack-minio
+              value: http://datastack-minio.default
             - name: MINIO_PORT
               value: 9000
             - name: MINIO_ACCESS_KEY
@@ -30,7 +30,7 @@ spec:
             - name: MINIO_BUCKETNAME
               value: gpsoci
             - name: DATABASE_URL
-              value: postgresql://root:root@datastack-bd-pg-service:5432/gps_db?schema=public
+              value: postgresql://root:root@datastack-bd-pg-service.default:5432/gps_db?schema=public
           ports:
             - containerPort: 3000
 ---

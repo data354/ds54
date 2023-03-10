@@ -15,5 +15,20 @@
         create_namespace: true
         update_repo_cache: true
         values:
-          hostname={{ rancher_hostname }}
-          bootstrapPassword={{ rancher_bootstrapPassword }}
+          hostname: "{{ rancher_hostname }}"
+          bootstrapPassword: "{{ rancher_bootstrapPassword }}"
+
+    - name: Install the rancher Helm chart
+      when: use_proxy
+      kubernetes.core.helm:
+        name: "{{ release_name }}"
+        chart_ref: rancher-stable/rancher
+        chart_version: "{{ chart_version }}"
+        release_namespace: "{{ release_namespace }}"
+        create_namespace: true
+        update_repo_cache: true
+        values:
+          http_proxy: http://{{ proxy_host }}
+          https_proxy: http://{{ proxy_host }}
+          hostname: "{{ rancher_hostname }}"
+          bootstrapPassword: "{{ rancher_bootstrapPassword }}"
