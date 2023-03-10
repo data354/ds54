@@ -7,6 +7,7 @@
         repo_url: "https://releases.rancher.com/server-charts/stable"
 
     - name: Install the rancher Helm chart
+      when: not use_proxy
       kubernetes.core.helm:
         name: "{{ release_name }}"
         chart_ref: rancher-stable/rancher
